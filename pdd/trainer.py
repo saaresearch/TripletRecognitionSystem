@@ -97,7 +97,7 @@ class TripletTrainer(object):
                     labels= labels.cuda()
                     data= data.cuda()
 
-                    embeddings=model(data)
+                    embeddings=self.model(data)
                     loss, frac_pos=miner(labels, embeddings)
                     loss.backward( )
                     self.optimizer.step()
@@ -112,18 +112,18 @@ class TripletTrainer(object):
                     )
 
       def validating_phase(self):
-          val_n        = len( tri_test_load )
+          val_n        = len(self.tri_test_load)
           val_loss     = 0.
           val_frac_pos = 0.
           self.model.eval()
-          with tqdm( tri_test_load, desc = 'val' ) as b_pbar:
+          with tqdm( self.tri_test_load, desc = 'val' ) as b_pbar:
             for b, batch in enumerate( b_pbar ):
               labels, data = batch
               labels= torch.cat( [ label for label in labels ], axis = 0 )
               data= torch.cat( [ datum for datum in   data ], axis = 0 )
               labels= labels.cuda()
               data= data.cuda()
-              embeddings=model(data)
+              embeddings=self.model(data)
               loss, frac_pos=miner(labels, embeddings)
               val_loss+= loss.detach().item()
               loss_history.append(val_loss)
