@@ -10,4 +10,4 @@ def plot(embeddings,labels,class_name,name,colors):
   plt.title(name)
   plt.show()
   plt.figure.canvas.draw()
-  plt.figure.savefig( f'./PDD{ miner.__class__ }.png' )
+  plt.figure.savefig( f'./PDD.png' )
