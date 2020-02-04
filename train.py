@@ -161,7 +161,7 @@ def main():
                             KNN_test_data_load=test_loader,
                             scheduler=scheduler,
                             nameofplotclasses=test_ds.classes,
-                            num_classes=NUM_CLASSES
+                            num_classes=NUM_CLASSES,
                             miner=miner)
                             
     trainer.train()  
