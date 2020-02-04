@@ -9,3 +9,5 @@ def plot(embeddings,labels,class_name,name,colors):
   plt.legend(class_name,loc='center left', bbox_to_anchor=(1, 0.5))
   plt.title(name)
   plt.show()
+  plt.figure.canvas.draw()
+  plt.figure.savefig( f'./PDD{ miner.__class__ }.png' )
