@@ -41,7 +41,8 @@ class TripletTrainer(object):
                    KNN_test_data_load,
                    scheduler,
                    nameofplotclasses,
-                   num_classes
+                   num_classes,
+                   miner
                    ):
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.model = model.to(self.device)
@@ -57,6 +58,7 @@ class TripletTrainer(object):
         self.loss_history=loss_history
         self.nameofplotClasses=nameofplotclasses
         self.num_classes=num_classes
+        self.miner=miner
 
 
       def train(self):
@@ -98,7 +100,7 @@ class TripletTrainer(object):
                     data= data.cuda()
 
                     embeddings=self.model(data)
-                    loss, frac_pos=miner(labels, embeddings)
+                    loss, frac_pos=self.miner(labels, embeddings)
                     loss.backward( )
                     self.optimizer.step()
 #                     scheduler.step()
@@ -124,7 +126,7 @@ class TripletTrainer(object):
               labels= labels.cuda()
               data= data.cuda()
               embeddings=self.model(data)
-              loss, frac_pos=miner(labels, embeddings)
+              loss, frac_pos=self.miner(labels, embeddings)
               val_loss+= loss.detach().item()
               loss_history.append(val_loss)
               val_frac_pos += frac_pos.detach().item() if frac_pos is not None else \
