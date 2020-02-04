@@ -69,8 +69,8 @@ class TripletTrainer(object):
             knn_acc(test_em,test_labels,train_em,train_labels,COUNT_NEIGHBOR_EXP_1,METRIC_KNN)
             knn_acc(test_em,test_labels,train_em,train_labels,COUNT_NEIGHBOR_EXP_2,METRIC_KNN)
             
-            plot(train_em,train_labels,self.nameofplotClasses,self.num_classes,'train_embeddings',COLORS)
-            plot(test_em,test_labels,self.nameofplotClasses,self.num_classes,'test_embeddings',COLORS)
+            plot(train_em,train_labels,self.nameofplotClasses,'train_embeddings',COLORS)
+            plot(test_em,test_labels,self.nameofplotClasses,'test_embeddings',COLORS)
             self.train_phase()
             self.validating_phase()
             
