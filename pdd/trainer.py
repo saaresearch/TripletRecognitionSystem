@@ -1,13 +1,16 @@
 from .metrics import knn_acc
 from .plot import plot
 import numpy as np
+from scipy.spatial.distance import cosine
+
 COUNT_NEIGHBOR_EXP_1=1
 COUNT_NEIGHBOR_EXP_2=3
-from scipy.spatial.distance import cosine
 METRIC_KNN=cosine
-COLORS = ['#00ffff', '#000000', '#0000ff', '#ff00ff',
-              '#808080', '#008000', '#00ff00', '#800000',
-              '#000080', '#808000','#800080', '#ff0000','#c0c0c0','#008080','#ffff00' ]
+COLORS = ['#00ffff','#000000','#0000ff','#ff00ff',
+          '#808080', '#008000', '#00ff00','#800000',
+          '#000080', '#808000','#800080','#ff0000',
+          '#c0c0c0','#008080','#ffff00']
+
 def forward_inputs_into_model(loader, model, device,batchsize):
     X = []
     y = []
@@ -57,7 +60,7 @@ class TripletTrainer(object):
 
 
       def train(self):
-        for e in tqdm( range( self.epochs ), desc = 'Epoch' ):
+        for e in tqdm(range(self.epochs),desc='Epoch'):
             
             test_em,test_labels=forward_inputs_into_model(self.test_loader,self.model,
                                                           self.device,self.batch_size)

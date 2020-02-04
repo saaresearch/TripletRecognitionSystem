@@ -22,12 +22,12 @@ class AllCropsDataset(Dataset):
         self.class_to_idx = {}
         # iterate over all folders 
         # with all crops
-        for i, d in enumerate(os.listdir(image_folder)):
-            self.crops.append(d)
+        for i, data in enumerate(os.listdir(image_folder)):
+            self.crops.append(data)
             # full path to the folder
-            d_path = os.path.join(image_folder, d, self.subset)
+            d_path = os.path.join(image_folder, data, self.subset)
             # attribute name to set attribute 
-            attr_name = '%s_ds' % d.lower()
+            attr_name = '%s_ds' % data.lower()
             print("Load '%s' data" % attr_name)
             # set the attribute with the specified name
             setattr(self, attr_name, ImageFolder(d_path))
@@ -40,9 +40,9 @@ class AllCropsDataset(Dataset):
             self.targets.extend(ds_targets)
             # add particular classes to the global classes' list
             ds_classes = []
-            for c in ds.classes:
-                new_class = '__'.join([d, c])
-                self.class_to_idx[new_class] = len(self.classes) + ds.class_to_idx[c]
+            for classes in ds.classes:
+                new_class = '__'.join([data, classes])
+                self.class_to_idx[new_class] = len(self.classes) + ds.class_to_idx[classes]
                 ds_classes.append(new_class)
             self.classes.extend(ds_classes)
             # imgs attribute has form (file_path, target)

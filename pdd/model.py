@@ -3,6 +3,10 @@ import torch
 import torch.nn as nn
 from torchvision.models import mobilenet_v2
 
+# coding: utf-8
+"""
+This model based on architecture MobileNetV2
+"""
 
 class PDDModel(nn.Module):
     def __init__(self, embedding_size, num_classes, pretrained=False):

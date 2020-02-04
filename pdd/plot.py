@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def plot(embeddings,labels,classes_name,classes_count,name,colors):
+def plot(embeddings,labels,classes_name,name,colors):
+  classes_count=len(classes_name)
   plt.figure(figsize=(10,10))
   
   for i in range(classes_count):

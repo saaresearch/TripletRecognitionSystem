@@ -24,17 +24,13 @@ from pdd.data_utils import AllCropsDataset
 from pdd.model import PDDModel
 from pdd.trainer import TripletTrainer
 from pdd.metrics import knn_acc
-# from train_test_split import datadir_train_test_split
-# from data_utils import AllCropsDataset
-# from model import PDDModel
-# from trainer import TripletTrainer
 
 RANDOM_SEED=13
 CUDN_DETERMENISTIC=True
 NUM_CLASSES=15
 
 # DATA_PATH = 'pdd'
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 DATA_ZIP_PATH = 'archive_full.zip'
 DATA_PATH = 'data/'
 TEST_SIZE = 0.2
@@ -80,12 +76,26 @@ def prepare_datasets():
 
     # print statistics
     print('Train size:', len(train_ds))
+
+
     print('Test size:', len(test_ds))
+
+
     print('Number of samples in the dataset:', len(train_ds))
+
+
     print('Crops in the dataset:', train_ds.crops)
+
+
     print('Total number of classes in the dataset:', len(train_ds.classes))
+
+
     print('Classes with the corresponding targets:')
+
+
     print(train_ds.class_to_idx)
+
+
     return train_ds, test_ds 
 def split_on_train_and_test(random_seed):
     for crop in os.listdir(DATA_PATH):
@@ -111,15 +121,15 @@ def main():
     train_ds, test_ds = prepare_datasets()
 
     print("Create data loaders")
-    train_set_d    = lambda index: train_ds[ index ][0].float( ).numpy( )
-    test_set_d     = lambda index:  test_ds[ index ][0].float( ).numpy( )
-    tri_train_set  = TripletDataset(torch.FloatTensor(train_ds.targets).numpy( ), train_set_d, len(train_ds), N_SAMPLE )
-    tri_test_set   = TripletDataset(torch.FloatTensor(test_ds.targets),  test_set_d,  len(test_ds),1 )
+    train_set_d = lambda index: train_ds[ index ][0].float( ).numpy( )
+    test_set_d = lambda index:  test_ds[ index ][0].float( ).numpy( )
+    tri_train_set = TripletDataset(torch.FloatTensor(train_ds.targets).numpy( ), train_set_d, len(train_ds), N_SAMPLE )
+    tri_test_set = TripletDataset(torch.FloatTensor(test_ds.targets),  test_set_d,  len(test_ds),1 )
     tri_train_load = DataLoader( tri_train_set,
     batch_size  = BATCH_SIZE,
-    shuffle     = True,
+    shuffle = True,
     num_workers = 2,
-    pin_memory  = True
+    pin_memory = True
     )
     tri_test_load  = DataLoader( tri_test_set,
         batch_size  = BATCH_SIZE,
@@ -136,7 +146,7 @@ def main():
     print("Build computational graph")
     model=PDDModel(1280,15,True)
     loss = torch.nn.NLLLoss()
-    model = model.to(device)
+    model = model.to(DEVICE)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.0001, weight_decay=1e-5)
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=7, gamma=0.1)
     print("Train model")
@@ -144,7 +154,7 @@ def main():
     trainer = TripletTrainer(model=model,
                             optimizer=optimizer,
                             tri_train_load=tri_train_load,
-                            epochs=5000,
+                            epochs=EPOCHS,
                             tri_test_load=tri_test_load,
                             batch_size=BATCH_SIZE,
                             KNN_train_data_load=train_loader,
