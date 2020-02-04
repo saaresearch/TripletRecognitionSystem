@@ -151,6 +151,7 @@ def main():
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=7, gamma=0.1)
     print("Train model")
     fix_random_seed(RANDOM_SEED, CUDN_DETERMENISTIC)
+    loss_history=[]
     trainer = TripletTrainer(model=model,
                             optimizer=optimizer,
                             tri_train_load=tri_train_load,
@@ -162,7 +163,8 @@ def main():
                             scheduler=scheduler,
                             nameofplotclasses=test_ds.classes,
                             num_classes=NUM_CLASSES,
-                            miner=miner)
+                            miner=miner,
+                            loss_history=loss_history)
                             
     trainer.train()  
     
