@@ -89,13 +89,13 @@ class TripletTrainer(object):
             
 
             self.model.train()
-            with tqdm( self.tri_train_load, desc = 'Batch' ) as b_pbar:
+            with tqdm(self.tri_train_load, desc = 'Batch') as b_pbar:
                 for b, batch in enumerate( b_pbar ):
                     self.optimizer.zero_grad()
 
                     labels, data = batch
-                    labels= torch.cat( [ label for label in labels ], axis = 0 )
-                    data= torch.cat( [ datum for datum in   data ], axis = 0 )
+                    labels= torch.cat([label for label in labels],axis = 0)
+                    data= torch.cat([datum for datum in data],axis = 0)
                     labels= labels.cuda()
                     data= data.cuda()
 
@@ -104,13 +104,13 @@ class TripletTrainer(object):
                     loss.backward( )
                     self.optimizer.step()
 #                     scheduler.step()
-                    train_loss+= loss.detach( ).item( )
-                    train_frac_pos += frac_pos.detach( ).item( ) if frac_pos is not None else \
+                    train_loss+= loss.detach().item()
+                    train_frac_pos += frac_pos.detach().item() if frac_pos is not None else \
                                       0.
 
                     b_pbar.set_postfix(
-                        train_loss     = train_loss / train_n,
-                        train_frac_pos = f'{( train_frac_pos / train_n ):.2%}'
+                        train_loss = train_loss / train_n,
+                        train_frac_pos = f'{(train_frac_pos/train_n):.2%}'
                     )
 
       def validating_phase(self):
@@ -118,8 +118,8 @@ class TripletTrainer(object):
           val_loss     = 0.
           val_frac_pos = 0.
           self.model.eval()
-          with tqdm( self.tri_test_load, desc = 'val' ) as b_pbar:
-            for b, batch in enumerate( b_pbar ):
+          with tqdm(self.tri_test_load, desc = 'val') as b_pbar:
+            for b, batch in enumerate(b_pbar):
               labels, data = batch
               labels= torch.cat( [ label for label in labels ], axis = 0 )
               data= torch.cat( [ datum for datum in   data ], axis = 0 )
