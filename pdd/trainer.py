@@ -26,7 +26,8 @@ def forward_inputs_into_model(loader, model, device,batchsize):
                     y.append(targets)
     return np.vstack(X), np.hstack(y)  
 def save_model(model,optimizer):
-          torch.save(model.state_dict(),'triplet_exp1.pt')   
+          torch.save(model,'triplet_model.pt')
+          torch.save(model.state_dict(),'triplet_weight.pt')   
           torch.save(optimizer.state_dict,'optim.pt')
 
 class TripletTrainer(object):
