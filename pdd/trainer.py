@@ -27,7 +27,6 @@ def save_model(model,optimizer):
           torch.save(model.state_dict(),'triplet_exp1.pt')   
           torch.save(optimizer.state_dict,'optim.pt')
 import torch
-loss_history=[]
 from tqdm import tqdm
 class TripletTrainer(object):
       def __init__(self,
@@ -42,7 +41,8 @@ class TripletTrainer(object):
                    scheduler,
                    nameofplotclasses,
                    num_classes,
-                   miner
+                   miner,
+                   loss_history
                    ):
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.model = model.to(self.device)
@@ -55,10 +55,11 @@ class TripletTrainer(object):
         self.train_loader=KNN_train_data_load
         self.test_loader=KNN_test_data_load
 #         self.scheduler=scheduler
-        self.loss_history=loss_history
         self.nameofplotClasses=nameofplotclasses
         self.num_classes=num_classes
         self.miner=miner
+        self.loss_history=loss_history
+
 
 
       def train(self):
@@ -128,7 +129,7 @@ class TripletTrainer(object):
               embeddings=self.model(data)
               loss, frac_pos=self.miner(labels, embeddings)
               val_loss+= loss.detach().item()
-              loss_history.append(val_loss)
+              self.loss_history.append(val_loss)
               val_frac_pos += frac_pos.detach().item() if frac_pos is not None else \
                                     0.
               b_pbar.set_postfix(
