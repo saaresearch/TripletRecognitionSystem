@@ -4,12 +4,8 @@ import torch.nn as nn
 from torchvision.models import mobilenet_v2
 
 
-
-
 class PDDModel(nn.Module):
-"""
-This model based on architecture MobileNetV2
-"""
+
     def __init__(self, embedding_size, num_classes, pretrained=False):
         super (PDDModel, self).__init__()
         
