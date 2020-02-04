@@ -121,10 +121,10 @@ def main():
     train_ds, test_ds = prepare_datasets()
 
     print("Create data loaders")
-    train_set_d = lambda index: train_ds[ index ][0].float( ).numpy( )
-    test_set_d = lambda index:  test_ds[ index ][0].float( ).numpy( )
-    tri_train_set = TripletDataset(torch.FloatTensor(train_ds.targets).numpy( ), train_set_d, len(train_ds), N_SAMPLE )
-    tri_test_set = TripletDataset(torch.FloatTensor(test_ds.targets),  test_set_d,  len(test_ds),1 )
+    train_set_d = lambda index:train_ds[index][0].float().numpy()
+    test_set_d = lambda index:test_ds[index][0].float().numpy()
+    tri_train_set = TripletDataset(torch.FloatTensor(train_ds.targets).numpy( ), train_set_d, len(train_ds), N_SAMPLE)
+    tri_test_set = TripletDataset(torch.FloatTensor(test_ds.targets), test_set_d, len(test_ds), 1)
     tri_train_load = DataLoader( tri_train_set,
     batch_size  = BATCH_SIZE,
     shuffle = True,
