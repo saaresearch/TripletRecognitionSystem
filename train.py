@@ -35,7 +35,7 @@ DATA_ZIP_PATH = 'archive_full.zip'
 DATA_PATH = 'data/'
 TEST_SIZE = 0.2
 N_SAMPLE= 8
-BATCH_SIZE= 32
+BATCH_SIZE= 16
 EPOCHS=5000
 
 
