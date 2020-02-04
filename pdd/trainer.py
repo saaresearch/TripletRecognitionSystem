@@ -2,6 +2,8 @@ from .metrics import knn_acc
 from .plot import plot
 import numpy as np
 from scipy.spatial.distance import cosine
+import torch
+from tqdm import tqdm
 
 COUNT_NEIGHBOR_EXP_1=1
 COUNT_NEIGHBOR_EXP_2=3
@@ -26,8 +28,7 @@ def forward_inputs_into_model(loader, model, device,batchsize):
 def save_model(model,optimizer):
           torch.save(model.state_dict(),'triplet_exp1.pt')   
           torch.save(optimizer.state_dict,'optim.pt')
-import torch
-from tqdm import tqdm
+
 class TripletTrainer(object):
       def __init__(self,
                    model, 

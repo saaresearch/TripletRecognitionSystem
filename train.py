@@ -47,8 +47,8 @@ def fix_random_seed(seed, cudnn_determenistic=False):
     torch.cuda.manual_seed(seed)
     torch.backends.cudnn.deterministic=cudnn_determenistic
 
-def unzip_data():
-    os.system("unzip %s -d %s" % (DATA_ZIP_PATH, DATA_PATH)) 
+def unzip_data(data_zip_path,data_path):
+    os.system("unzip %s -d %s" % (data_zip_path, data_path)) 
 
 
 
@@ -112,7 +112,7 @@ def main():
     fix_random_seed(RANDOM_SEED, CUDN_DETERMENISTIC)
 
     print("Extract data")
-    unzip_data()
+    unzip_data(DATA_ZIP_PATH,DATA_PATH)
 
     print("Split on train and test")
     split_on_train_and_test(RANDOM_SEED)
