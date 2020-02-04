@@ -64,7 +64,7 @@ class TripletTrainer(object):
 
 
       def train(self):
-        for e in tqdm(range(self.epochs),desc='Epoch'):
+        for e in tqdm(range(self.epochs), desc = 'Epoch'):
             
             test_em,test_labels=forward_inputs_into_model(self.test_loader,self.model,
                                                           self.device,self.batch_size)
