@@ -44,7 +44,7 @@ def get_predict(img_name):
     resizeimg=resizeimg.reshape(1,3,256,256)
     inputs = torch.from_numpy(resizeimg).float()
     model.eval()
-    print(type(inputs))
+    # print(type(inputs))
     transform=transforms.Compose([
                 transforms.Resize((256,256)),
                 transforms.ToTensor(),
@@ -62,17 +62,39 @@ def get_predict(img_name):
     # print(classes_name)
     y_pred=knn.predict(embedding)
     # print(img.shape)
-    print(resizeimg.shape)
+    # print(resizeimg.shape)
     print(y_pred)
     print(classes_name[y_pred[0]])
     # print(type(y_pred.getattr())
     # print(classes_name[(int)y_pred])
 
-get_predict("/home/artem/pdd/index.jpeg")
-get_predict("xloros.jpg")
-get_predict("gnil.jpg")
+# get_predict("/home/artem/pdd/index.jpeg")
+# get_predict("/home/artem/pdd/script_test/xloros/xloros.jpg")
+# get_predict("/home/artem/pdd/script_test/xloros/xloros2.jpg")
+# get_predict("/home/artem/pdd/script_test/xloros/xloros3.jpg")
 
+# print(" ")
 
+# get_predict("/home/artem/pdd/script_test/health/health1.jpeg")
+# get_predict("/home/artem/pdd/script_test/health/health2.jpg")
+# get_predict("/home/artem/pdd/script_test/health/health3.jpg")
 
+# print (" ")
 
+# get_predict("/home/artem/pdd/script_test/gnil/gnil.jpg")
+# get_predict("/home/artem/pdd/script_test/gnil/gnil1.jpg")
+# get_predict("/home/artem/pdd/script_test/gnil/gnil3.jpg")
+
+# print(" ")
+
+# get_predict("/home/artem/pdd/script_test/apopleks/apop1.jpg")
+# get_predict("/home/artem/pdd/script_test/apopleks/apop1.jpg")
+# get_predict("/home/artem/pdd/script_test/apopleks/apop1.jpg")
+
+# get_predict("/home/artem/pdd/script_test/health_corn/health_1.jpg")
+# get_predict("/home/artem/pdd/script_test/health_corn/health_2.jpg")
+
+# get_predict("/home/artem/pdd/script_test/wheat_yellow_rust/yellow_rust1.jpg")
+
+# get_predict("/home/artem/pdd/script_test/health_weat/health.jpg")
 
