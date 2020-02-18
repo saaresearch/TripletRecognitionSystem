@@ -1,6 +1,5 @@
 from pdd.model import PDDModel
 import torch
-
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 from PIL import Image
@@ -22,14 +21,15 @@ def load_image(infilename) :
     img=img.reshape(1,3,256,256)
     return img
 
-def load_text_file(filename,places):
+def load_text_file(filename):
+    classes_name=[]
     with open(filename, 'r') as filehandle:
         for line in filehandle:
             currentPlace = line[:-1]
-            places.append(currentPlace)
+            classes_name.append(currentPlace)
+    return classes_name
 
 def get_predict(img_name):
-   
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model=PDDModel(1280,15,True)
     knn=KNeighborsClassifier(3,metric=cosine)
@@ -38,8 +38,8 @@ def get_predict(img_name):
     model.eval()
     embedding=model(inp).detach().cpu().numpy()
     knn= pickle.load(open('knn_model.sav', 'rb'))
-    classes_name=[]
-    load_text_file('classname.txt',classes_name)
+    
+    classes_name=load_text_file('classname.txt')
     y_pred=knn.predict(embedding)
     # distances, indices = knn.kneighbors(embedding,  n_neighbors=1)
     # print(distances, indices)
