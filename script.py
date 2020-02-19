@@ -10,6 +10,9 @@ from scipy.spatial.distance import cosine
 import pickle
 from torchvision import transforms
 from torchvision import transforms, datasets
+import argparse
+import yaml
+
 
 
 def load_image(infilename):
@@ -31,32 +34,35 @@ def load_text_file(filename):
             classes_name.append(currentPlace)
     return classes_name
 
+def load_config(config_file):
+    with open(config_file) as f:
+        return yaml.load(f, Loader=yaml.FullLoader)
 
-def get_predict(img_name):
+def get_predict(img_name,triplet_model_weight,knn_model_weight,class_name):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model = PDDModel(1280, 15, True)
     knn = KNeighborsClassifier(3, metric=cosine)
-    model.load_state_dict(torch.load('triplet.pt', map_location=device))
+    model.load_state_dict(torch.load(triplet_model_weight, map_location=device))
     inp = load_image(img_name)
     model.eval()
     embedding = model(inp).detach().cpu().numpy()
-    knn = pickle.load(open('knn_model.sav', 'rb'))
+    knn = pickle.load(open(knn_model_weight, 'rb'))
 
-    classes_name = load_text_file('classname.txt')
+    classes_name = load_text_file(class_name)
     y_pred = knn.predict(embedding)
     distances, indices = knn.kneighbors(embedding[[0]], n_neighbors=3)
-    print(distances, indices)
-    print(indices.ravel().__dir__())
-    print(indices.data)
-    print(y_pred)
+    # print(distances, indices)
+    # print(indices.ravel().__dir__())
+    # print(indices.data)
+    # print(y_pred)
     print(classes_name[y_pred[0]])
 
 
 def main():
     # path=input()
-
     # get_predict(path)
-    get_predict("/home/artem/pdd/script_test/xloros/xloros.jpg")
+    config = load_config('config/script_parametrs.yaml')
+    get_predict(config['img_path'],config['triplet_model_weight'],config['knn_model_weight'],config['class_name'])
 
 
 if __name__ == '__main__':
