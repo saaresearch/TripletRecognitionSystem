@@ -1,0 +1,4 @@
+img_path: /home/artem/pdd/script_test/xloros/xloros.jpg
+triplet_model_weight: triplet.pt
+knn_model_weight: knn_model.sav
+class_name: classname.txt
