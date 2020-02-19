@@ -11,45 +11,52 @@ import pickle
 from torchvision import transforms
 from torchvision import transforms, datasets
 
-def load_image(infilename) :
-    transform=transforms.Compose([
-                transforms.Resize((256,256)),
-                transforms.ToTensor(),
-                transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])
-    img=Image.open(infilename)                           
-    img=transform(img)
-    img=img.reshape(1,3,256,256)
+
+def load_image(infilename):
+    transform = transforms.Compose([
+        transforms.Resize((256, 256)),
+        transforms.ToTensor(),
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])
+    img = Image.open(infilename)
+    img = transform(img)
+    img = img.reshape(1, 3, 256, 256)
     return img
 
+
 def load_text_file(filename):
-    classes_name=[]
+    classes_name = []
     with open(filename, 'r') as filehandle:
         for line in filehandle:
             currentPlace = line[:-1]
             classes_name.append(currentPlace)
     return classes_name
 
+
 def get_predict(img_name):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    model=PDDModel(1280,15,True)
-    knn=KNeighborsClassifier(3,metric=cosine)
+    model = PDDModel(1280, 15, True)
+    knn = KNeighborsClassifier(3, metric=cosine)
     model.load_state_dict(torch.load('triplet.pt', map_location=device))
-    inp=load_image(img_name)
+    inp = load_image(img_name)
     model.eval()
-    embedding=model(inp).detach().cpu().numpy()
-    knn= pickle.load(open('knn_model.sav', 'rb'))
-    
-    classes_name=load_text_file('classname.txt')
-    y_pred=knn.predict(embedding)
-    # distances, indices = knn.kneighbors(embedding,  n_neighbors=1)
-    # print(distances, indices)
-    # print(y_pred)
+    embedding = model(inp).detach().cpu().numpy()
+    knn = pickle.load(open('knn_model.sav', 'rb'))
+
+    classes_name = load_text_file('classname.txt')
+    y_pred = knn.predict(embedding)
+    distances, indices = knn.kneighbors(embedding[[0]], n_neighbors=3)
+    print(distances, indices)
+    print(indices.ravel().__dir__())
+    print(indices.data)
+    print(y_pred)
     print(classes_name[y_pred[0]])
-    
+
 
 def main():
-    path=input()
-    get_predict(path)
+    # path=input()
+
+    # get_predict(path)
+    get_predict("/home/artem/pdd/script_test/xloros/xloros.jpg")
 
 
 if __name__ == '__main__':
@@ -85,4 +92,3 @@ if __name__ == '__main__':
 # get_predict("/home/artem/pdd/script_test/wheat_yellow_rust/yellow_rust1.jpg")
 
 # get_predict("/home/artem/pdd/script_test/health_weat/health.jpg")
-

@@ -9,12 +9,14 @@ DATA_PATH = 'data/'
 TEST_SIZE = 0.2
 RS = 13
 
+
 def _remove_path_if_exists(path):
     if os.path.exists(path):
         if os.path.isfile(path):
             os.remove(path)
         else:
             shutil.rmtree(path)
+
 
 def _makedir_and_copy2(path, dirname, fnames):
     path_for_saving_files = os.path.join(path, dirname)
@@ -36,7 +38,7 @@ def datadir_train_test_split(origin_path, test_size, random_state=0):
     print("Test size: %.2f" % test_size)
     print("Random state: {}".format(random_state))
     train_path = os.path.join(origin_path, 'train')
-    test_path = os.path.join(origin_path, 'test')   
+    test_path = os.path.join(origin_path, 'test')
     _remove_path_if_exists(train_path)
     _remove_path_if_exists(test_path)
 
@@ -61,7 +63,7 @@ def datadir_train_test_split(origin_path, test_size, random_state=0):
             # shuffle array
             rs.shuffle(img_fnames)
             # split on train and test
-            n_test_files = int(len(img_fnames)*test_size)
+            n_test_files = int(len(img_fnames) * test_size)
             test_img_fnames = img_fnames[:n_test_files]
             train_img_fnames = img_fnames[n_test_files:]
             # copy train files into `train_path/folder`
@@ -73,9 +75,9 @@ def datadir_train_test_split(origin_path, test_size, random_state=0):
         for folder in subfolders:
             shutil.rmtree(folder)
 
-    except:
+    except BaseException:
         _remove_path_if_exists(train_path)
         _remove_path_if_exists(test_path)
-        raise 
-        
+        raise
+
     return (train_path, test_path)
