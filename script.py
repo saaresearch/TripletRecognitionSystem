@@ -50,7 +50,7 @@ def get_predict(img_name,triplet_model_weight,knn_model_weight,class_name):
 
     classes_name = load_text_file(class_name)
     y_pred = knn.predict(embedding)
-    distances, indices = knn.kneighbors(embedding[[0]], n_neighbors=3)
+    # distances, indices = knn.kneighbors(embedding[[0]], n_neighbors=3)
     # print(distances, indices)
     # print(indices.ravel().__dir__())
     # print(indices.data)
@@ -69,32 +69,3 @@ if __name__ == '__main__':
     main()
 
 
-# get_predict("/home/artem/pdd/index.jpeg")
-# get_predict("/home/artem/pdd/script_test/xloros/xloros.jpg")
-# get_predict("/home/artem/pdd/script_test/xloros/xloros2.jpg")
-# get_predict("/home/artem/pdd/script_test/xloros/xloros3.jpg")
-
-# print(" ")
-
-# get_predict("/home/artem/pdd/script_test/health/health1.jpeg")
-# get_predict("/home/artem/pdd/script_test/health/health2.jpg")
-# get_predict("/home/artem/pdd/script_test/health/health3.jpg")
-
-# print (" ")
-
-# get_predict("/home/artem/pdd/script_test/gnil/gnil.jpg")
-# get_predict("/home/artem/pdd/script_test/gnil/gnil1.jpg")
-# get_predict("/home/artem/pdd/script_test/gnil/gnil3.jpg")
-
-# print(" ")
-
-# get_predict("/home/artem/pdd/script_test/apopleks/apop1.jpg")
-# get_predict("/home/artem/pdd/script_test/apopleks/apop1.jpg")
-# get_predict("/home/artem/pdd/script_test/apopleks/apop1.jpg")
-
-# get_predict("/home/artem/pdd/script_test/health_corn/health_1.jpg")
-# get_predict("/home/artem/pdd/script_test/health_corn/health_2.jpg")
-
-# get_predict("/home/artem/pdd/script_test/wheat_yellow_rust/yellow_rust1.jpg")
-
-# get_predict("/home/artem/pdd/script_test/health_weat/health.jpg")
