@@ -14,7 +14,6 @@ import argparse
 import yaml
 
 
-
 def load_image(infilename):
     transform = transforms.Compose([
         transforms.Resize((256, 256)),
@@ -34,15 +33,20 @@ def load_text_file(filename):
             classes_name.append(currentPlace)
     return classes_name
 
+
 def load_config(config_file):
     with open(config_file) as f:
         return yaml.load(f, Loader=yaml.FullLoader)
 
-def get_predict(img_name,triplet_model_weight,knn_model_weight,class_name):
+
+def get_predict(img_name, triplet_model_weight, knn_model_weight, class_name):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model = PDDModel(1280, 15, True)
     knn = KNeighborsClassifier(3, metric=cosine)
-    model.load_state_dict(torch.load(triplet_model_weight, map_location=device))
+    model.load_state_dict(
+        torch.load(
+            triplet_model_weight,
+            map_location=device))
     inp = load_image(img_name)
     model.eval()
     embedding = model(inp).detach().cpu().numpy()
@@ -62,10 +66,12 @@ def main():
     # path=input()
     # get_predict(path)
     config = load_config('config/script_parametrs.yaml')
-    get_predict(config['img_path'],config['triplet_model_weight'],config['knn_model_weight'],config['class_name'])
+    get_predict(
+        config['img_path'],
+        config['triplet_model_weight'],
+        config['knn_model_weight'],
+        config['class_name'])
 
 
 if __name__ == '__main__':
     main()
-
-
