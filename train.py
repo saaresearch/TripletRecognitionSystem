@@ -15,6 +15,7 @@ from triplettorch import AllTripletMiner
 from torch.utils.data import DataLoader
 from triplettorch import TripletDataset
 
+import yaml
 
 from torchvision import datasets
 import matplotlib.pyplot as plt
@@ -25,18 +26,12 @@ from pdd.model import PDDModel
 from pdd.trainer import TripletTrainer
 from pdd.metrics import knn_acc
 
-RANDOM_SEED = 13
-CUDN_DETERMENISTIC = True
-NUM_CLASSES = 15
-
-# DATA_PATH = 'pdd'
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-DATA_ZIP_PATH = 'archive_full.zip'
-DATA_PATH = 'data/'
-TEST_SIZE = 0.2
-N_SAMPLE = 8
-BATCH_SIZE = 16
-EPOCHS = 5000
+
+
+def load_config(config_file):
+    with open(config_file) as f:
+        return yaml.load(f, Loader=yaml.FullLoader)
 
 
 def fix_random_seed(seed, cudnn_determenistic=False):
@@ -51,9 +46,9 @@ def unzip_data(data_zip_path, data_path):
     os.system("unzip %s -d %s" % (data_zip_path, data_path))
 
 
-def prepare_datasets():
+def prepare_datasets(data_path):
     train_ds = AllCropsDataset(
-        DATA_PATH,
+        data_path,
         subset='train',
         transform=transforms.Compose([
             transforms.Resize(256),
@@ -66,7 +61,7 @@ def prepare_datasets():
         target_transform=torch.tensor)
 
     test_ds = AllCropsDataset(
-        DATA_PATH,
+        data_path,
         subset='test',
         transform=transforms.Compose([
             transforms.Resize(256),
@@ -92,26 +87,31 @@ def prepare_datasets():
     return train_ds, test_ds
 
 
-def split_on_train_and_test(random_seed):
-    for crop in os.listdir(DATA_PATH):
-        crop_path = os.path.join(DATA_PATH, crop)
+def split_on_train_and_test(random_seed, data_path, test_size):
+    for crop in os.listdir(data_path):
+        crop_path = os.path.join(data_path, crop)
         _ = datadir_train_test_split(crop_path,
-                                     test_size=TEST_SIZE,
+                                     test_size=test_size,
                                      random_state=random_seed)
 
 
 def main():
 
-    fix_random_seed(RANDOM_SEED, CUDN_DETERMENISTIC)
+    config = load_config('config/train_parametrs.yaml')
+
+    fix_random_seed(config['random_seed'], config['cudn_determenistic'])
 
     print("Extract data")
-    unzip_data(DATA_ZIP_PATH, DATA_PATH)
+    unzip_data(config['data_zip_path'], config['data_path'])
 
     print("Split on train and test")
-    split_on_train_and_test(RANDOM_SEED)
+    split_on_train_and_test(
+        config['random_seed'],
+        config['data_path'],
+        config['test_size'])
 
     print("Create datasets")
-    train_ds, test_ds = prepare_datasets()
+    train_ds, test_ds = prepare_datasets(config['data_path'])
 
     print("Create data loaders")
     def train_set_d(index): return train_ds[index][0].float().numpy()
@@ -121,7 +121,7 @@ def main():
             train_ds.targets).numpy(),
         train_set_d,
         len(train_ds),
-        N_SAMPLE)
+        config['n_sample'])
     tri_test_set = TripletDataset(
         torch.FloatTensor(
             test_ds.targets),
@@ -129,13 +129,13 @@ def main():
         len(test_ds),
         1)
     tri_train_load = DataLoader(tri_train_set,
-                                batch_size=BATCH_SIZE,
+                                batch_size=config['bath_size'],
                                 shuffle=True,
                                 num_workers=2,
                                 pin_memory=True
                                 )
     tri_test_load = DataLoader(tri_test_set,
-                               batch_size=BATCH_SIZE,
+                               batch_size=config['bath_size'],
                                shuffle=False,
                                num_workers=2,
                                pin_memory=True
@@ -144,13 +144,13 @@ def main():
     train_loader = torch.utils.data.DataLoader(
         train_ds,
         pin_memory=True,
-        batch_size=BATCH_SIZE,
+        batch_size=config['bath_size'],
         shuffle=True,
         num_workers=2)
     test_loader = torch.utils.data.DataLoader(
         test_ds,
         pin_memory=True,
-        batch_size=BATCH_SIZE,
+        batch_size=config['bath_size'],
         shuffle=True,
         num_workers=2)
     print("Create miner")
@@ -171,19 +171,19 @@ def main():
     #     for listitem in test_ds.classes:
     #      filehandle.write('%s\n' % listitem)
     print("Train model")
-    fix_random_seed(RANDOM_SEED, CUDN_DETERMENISTIC)
+    fix_random_seed(config['random_seed'], config['cudn_determenistic'])
     loss_history = []
     trainer = TripletTrainer(model=model,
                              optimizer=optimizer,
                              tri_train_load=tri_train_load,
-                             epochs=EPOCHS,
+                             epochs=config['epochs'],
                              tri_test_load=tri_test_load,
-                             batch_size=BATCH_SIZE,
+                             batch_size=config['bath_size'],
                              KNN_train_data_load=train_loader,
                              KNN_test_data_load=test_loader,
                              scheduler=scheduler,
                              nameofplotclasses=test_ds.classes,
-                             num_classes=NUM_CLASSES,
+                             num_classes=config['num_classes'],
                              miner=miner,
                              loss_history=loss_history)
 
