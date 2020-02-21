@@ -66,7 +66,7 @@ class TripletTrainer(object):
         self.num_classes = num_classes
         self.miner = miner
         self.loss_history = loss_history
-        self.safe_plot_img_path=saf
+        self.safe_plot_img_path=safe_plot_img_path
 
     def train(self):
         for e in tqdm(range(self.epochs), desc='Epoch'):
