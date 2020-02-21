@@ -85,7 +85,7 @@ def create_json_file(label, class_name, knn_model, distances, indices):
         json.dump(data, write_file, indent=2)
 
 
-def get_predict(img_name, triplet_model_weight, knn_model_weight, class_name):
+def get_predict(img_name, triplet_model_weight, knn_model_weight, class_names):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model = PDDModel(1280, 15, True)
     knn = KNeighborsClassifier(3, metric=cosine)
@@ -93,12 +93,12 @@ def get_predict(img_name, triplet_model_weight, knn_model_weight, class_name):
         torch.load(
             triplet_model_weight,
             map_location=device))
-    inp = load_image(img_name)
+    inputs = load_image(img_name)
     model.eval()
-    embedding = model(inp).detach().cpu().numpy()
+    embedding = model(inputs).detach().cpu().numpy()
     knn = pickle.load(open(knn_model_weight, 'rb'))
 
-    classes_name = load_text_file(class_name)
+    classes_name = load_text_file(class_names)
     y_pred = knn.predict(embedding)
     distances, indices = knn.kneighbors(embedding[[0]], n_neighbors=10)
     create_json_file(y_pred[0], classes_name, knn, distances, indices)

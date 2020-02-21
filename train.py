@@ -15,8 +15,6 @@ from triplettorch import AllTripletMiner
 from torch.utils.data import DataLoader
 from triplettorch import TripletDataset
 
-import yaml
-
 from torchvision import datasets
 import matplotlib.pyplot as plt
 
@@ -125,13 +123,13 @@ def main():
         len(test_ds),
         1)
     tri_train_load = DataLoader(tri_train_set,
-                                batch_size=config['bath_size'],
+                                batch_size=config['batch_size'],
                                 shuffle=True,
                                 num_workers=2,
                                 pin_memory=True
                                 )
     tri_test_load = DataLoader(tri_test_set,
-                               batch_size=config['bath_size'],
+                               batch_size=config['batch_size'],
                                shuffle=False,
                                num_workers=2,
                                pin_memory=True
@@ -140,13 +138,13 @@ def main():
     train_loader = torch.utils.data.DataLoader(
         train_ds,
         pin_memory=True,
-        batch_size=config['bath_size'],
+        batch_size=config['batch_size'],
         shuffle=True,
         num_workers=2)
     test_loader = torch.utils.data.DataLoader(
         test_ds,
         pin_memory=True,
-        batch_size=config['bath_size'],
+        batch_size=config['batch_size'],
         shuffle=True,
         num_workers=2)
     print("Create miner")
@@ -154,7 +152,7 @@ def main():
 
     print("Build computational graph")
     model = PDDModel(1280, 15, True)
-    loss = torch.nn.NLLLoss()
+    # loss = torch.nn.NLLLoss()
     model = model.to(DEVICE)
     optimizer = torch.optim.Adam(
         model.parameters(),
@@ -162,10 +160,6 @@ def main():
         weight_decay=1e-5)
     scheduler = torch.optim.lr_scheduler.StepLR(
         optimizer, step_size=7, gamma=0.1)
-
-    # with open('classname.txt', 'w') as filehandle:
-    #     for listitem in test_ds.classes:
-    #      filehandle.write('%s\n' % listitem)
     print("Train model")
     fix_random_seed(config['random_seed'], config['cudn_determenistic'])
     loss_history = []
@@ -174,14 +168,15 @@ def main():
                              tri_train_load=tri_train_load,
                              epochs=config['epochs'],
                              tri_test_load=tri_test_load,
-                             batch_size=config['bath_size'],
+                             batch_size=config['batch_size'],
                              KNN_train_data_load=train_loader,
                              KNN_test_data_load=test_loader,
                              scheduler=scheduler,
                              nameofplotclasses=test_ds.classes,
                              num_classes=config['num_classes'],
                              miner=miner,
-                             loss_history=loss_history)
+                             loss_history=loss_history,
+                             safe_plot_img_path=config['plot_embeddings_img'])
 
     trainer.train()
 
