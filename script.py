@@ -102,7 +102,7 @@ def get_predict(img_name, triplet_model_weight, knn_model_weight, class_name):
     y_pred = knn.predict(embedding)
     distances, indices = knn.kneighbors(embedding[[0]], n_neighbors=10)
     create_json_file(y_pred[0], classes_name, knn, distances, indices)
-    show_predict('data_file.json')
+    
 
 
 def main():
@@ -114,7 +114,7 @@ def main():
         config['triplet_model_weight'],
         config['knn_model_weight'],
         config['class_name'])
-
+    show_predict('data_file.json')
 
 if __name__ == '__main__':
     main()
