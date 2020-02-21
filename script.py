@@ -10,8 +10,7 @@ from scipy.spatial.distance import cosine
 import pickle
 from torchvision import transforms
 from torchvision import transforms, datasets
-
-import yaml
+from pdd.data_utils import load_config
 import json
 
 
@@ -34,12 +33,6 @@ def load_text_file(filename):
             classes_name.append(currentPlace)
     return classes_name
 
-
-def load_config(config_file):
-    with open(config_file) as f:
-        return yaml.load(f, Loader=yaml.FullLoader)
-
-
 def show_predict(filename):
     with open(filename) as f:
         items = json.load(f)
@@ -55,8 +48,8 @@ def show_predict(filename):
     print('\033[1m' + "TOP 5 predictions :")
     for predict in item_topn:
         print('\033[0m' + "label:", str(predict['label']),
-             "Image index:", str(predict['index']),
-             "Distance:", str(predict['distance']), sep="  ")
+              "Image index:", str(predict['index']),
+              "Distance:", str(predict['distance']), sep="  ")
 
 
 def create_json_file(label, class_name, knn_model, distances, indices):

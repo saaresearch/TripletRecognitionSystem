@@ -107,7 +107,7 @@ class TripletTrainer(object):
                 save_model(self.model, self.optimizer)
 
     def train_phase(self):
-        # ================== TRAIN ========================
+       
         train_n = len(self.tri_train_load)
         train_loss = 0.
         train_frac_pos = 0.

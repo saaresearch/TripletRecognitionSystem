@@ -26,13 +26,14 @@ from pdd.model import PDDModel
 from pdd.trainer import TripletTrainer
 from pdd.metrics import knn_acc
 from pdd.data_utils import unzip_data
+from pdd.data_utils import load_config
 
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
-def load_config(config_file):
-    with open(config_file) as f:
-        return yaml.load(f, Loader=yaml.FullLoader)
+# def load_config(config_file):
+#     with open(config_file) as f:
+#         return yaml.load(f, Loader=yaml.FullLoader)
 
 
 def fix_random_seed(seed, cudnn_determenistic=False):
