@@ -66,7 +66,7 @@ class TripletTrainer(object):
         self.num_classes = num_classes
         self.miner = miner
         self.loss_history = loss_history
-        self.safe_plot_img_path=safe_plot_img_path
+        self.safe_plot_img_path=saf
 
     def train(self):
         for e in tqdm(range(self.epochs), desc='Epoch'):
@@ -96,14 +96,14 @@ class TripletTrainer(object):
                 self.nameofplotClasses,
                 'train_embeddings',
                 COLORS,
-                self.save_img_path)
+                self.safe_plot_img_path)
             plot(
                 test_em,
                 test_labels,
                 self.nameofplotClasses,
                 'test_embeddings',
                 COLORS,
-                self.save_img_path)
+                self.safe_plot_img_path)
             self.train_phase()
             self.validating_phase()
 
