@@ -48,7 +48,8 @@ class TripletTrainer(object):
                  nameofplotclasses,
                  num_classes,
                  miner,
-                 loss_history
+                 loss_history,
+                 safe_plot_img_path
                  ):
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.model = model.to(self.device)
@@ -65,6 +66,7 @@ class TripletTrainer(object):
         self.num_classes = num_classes
         self.miner = miner
         self.loss_history = loss_history
+        self.safe_plot_img_path=safe_plot_img_path
 
     def train(self):
         for e in tqdm(range(self.epochs), desc='Epoch'):
@@ -93,13 +95,15 @@ class TripletTrainer(object):
                 train_labels,
                 self.nameofplotClasses,
                 'train_embeddings',
-                COLORS)
+                COLORS,
+                self.save_img_path)
             plot(
                 test_em,
                 test_labels,
                 self.nameofplotClasses,
                 'test_embeddings',
-                COLORS)
+                COLORS,
+                self.save_img_path)
             self.train_phase()
             self.validating_phase()
 
