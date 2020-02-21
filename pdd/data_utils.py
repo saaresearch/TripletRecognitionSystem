@@ -6,6 +6,12 @@ from torch.utils.data import Sampler
 from torchvision.datasets import ImageFolder
 
 
+def unzip_data(data_zip_path, data_path):
+        os.system("unzip %s -d %s" % (data_zip_path, data_path))
+
+
+
+
 class AllCropsDataset(Dataset):
     def __init__(self, image_folder, subset='',
                  transform=None, target_transform=None):
@@ -67,3 +73,5 @@ class AllCropsDataset(Dataset):
             target = self.target_transform(target)
 
         return img, target
+
+    

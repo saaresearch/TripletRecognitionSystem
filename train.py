@@ -25,6 +25,7 @@ from pdd.data_utils import AllCropsDataset
 from pdd.model import PDDModel
 from pdd.trainer import TripletTrainer
 from pdd.metrics import knn_acc
+from pdd.data_utils import unzip_data
 
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -42,8 +43,8 @@ def fix_random_seed(seed, cudnn_determenistic=False):
     torch.backends.cudnn.deterministic = cudnn_determenistic
 
 
-def unzip_data(data_zip_path, data_path):
-    os.system("unzip %s -d %s" % (data_zip_path, data_path))
+# def unzip_data(data_zip_path, data_path):
+#     os.system("unzip %s -d %s" % (data_zip_path, data_path))
 
 
 def prepare_datasets(data_path):
