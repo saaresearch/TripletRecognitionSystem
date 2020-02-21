@@ -71,17 +71,11 @@ def prepare_datasets(data_path):
 
     # print statistics
     print('Train size:', len(train_ds))
-
     print('Test size:', len(test_ds))
-
     print('Number of samples in the dataset:', len(train_ds))
-
     print('Crops in the dataset:', train_ds.crops)
-
     print('Total number of classes in the dataset:', len(train_ds.classes))
-
     print('Classes with the corresponding targets:')
-
     print(train_ds.class_to_idx)
 
     return train_ds, test_ds
