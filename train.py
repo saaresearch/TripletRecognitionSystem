@@ -96,16 +96,16 @@ def main():
     fix_random_seed(config['random_seed'], config['cudn_determenistic'])
 
     print("Extract data")
-    unzip_data(config['data_zip_path'], config['data_path'])
+    unzip_data(config['data_zip_path'], config['data_save_path'])
 
     print("Split on train and test")
     split_on_train_and_test(
         config['random_seed'],
-        config['data_path'],
+        config['data_save_path'],
         config['test_size'])
 
     print("Create datasets")
-    train_ds, test_ds = prepare_datasets(config['data_path'])
+    train_ds, test_ds = prepare_datasets(config['data_save_path'])
 
     print("Create data loaders")
     def train_set_d(index): return train_ds[index][0].float().numpy()
