@@ -165,9 +165,9 @@ def main():
     loss_history = []
     trainer = TripletTrainer(model=model,
                              optimizer=optimizer,
-                             tri_train_load=tri_train_load,
+                             train_triplet_loader=tri_train_load,
                              epochs=config['epochs'],
-                             tri_test_load=tri_test_load,
+                             test_triplet_loader=tri_test_load,
                              batch_size=config['batch_size'],
                              KNN_train_data_load=train_loader,
                              KNN_test_data_load=test_loader,

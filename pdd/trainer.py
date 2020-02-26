@@ -37,9 +37,9 @@ class TripletTrainer(object):
     def __init__(self,
                  model,
                  optimizer,
-                 tri_train_load,
+                 train_triplet_loader,
                  epochs,
-                 tri_test_load,
+                 test_triplet_loader,
                  batch_size,
                  KNN_train_data_load,
                  KNN_test_data_load,
@@ -57,8 +57,8 @@ class TripletTrainer(object):
         self.optimizer = optimizer
         # self.loss = loss
         self.epochs = epochs
-        self.tri_train_load = tri_train_load
-        self.tri_test_load = tri_test_load
+        self.tri_train_load = train_triplet_loader
+        self.tri_test_load = test_triplet_loader
         self.batch_size = batch_size
         self.train_loader = KNN_train_data_load
         self.test_loader = KNN_test_data_load
