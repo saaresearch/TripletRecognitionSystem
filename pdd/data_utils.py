@@ -51,10 +51,10 @@ class AllCropsDataset(Dataset):
             self.targets.extend(ds_targets)
             # add particular classes to the global classes' list
             ds_classes = []
-            for classes in ds.classes:
-                new_class = '__'.join([directory, classes])
+            for class_name in ds.classes:
+                new_class = '__'.join([directory, class_name])
                 self.class_to_idx[new_class] = len(
-                    self.classes) + ds.class_to_idx[classes]
+                    self.classes) + ds.class_to_idx[class_name]
                 ds_classes.append(new_class)
             self.classes.extend(ds_classes)
             # imgs attribute has form (file_path, target)
