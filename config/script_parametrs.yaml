@@ -1,4 +1,12 @@
+
+# Path to image for classify
 img_path: /home/artem/pdd/script_test/xloros/xloros.jpg
-triplet_model_weight: triplet.pt
-knn_model_weight: knn_model.sav
-class_name: classname.txt
+
+# Path to feature extractor model 
+feature_extractor: triplet.pt
+
+# Path to classifier model 
+classifier: knn_model.sav
+
+# Path to file with class names
+class_names: classname.txt

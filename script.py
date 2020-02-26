@@ -85,18 +85,18 @@ def create_json_file(label, class_name, knn_model, distances, indices):
         json.dump(data, write_file, indent=2)
 
 
-def get_predict(img_name, triplet_model_weight, knn_model_weight, class_names):
+def get_predict(img_name, feature_extractor, classifier, class_names):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model = PDDModel(1280, 15, True)
     knn = KNeighborsClassifier(3, metric=cosine)
     model.load_state_dict(
         torch.load(
-            triplet_model_weight,
+            feature_extractor,
             map_location=device))
     inputs = load_image(img_name)
     model.eval()
     embedding = model(inputs).detach().cpu().numpy()
-    knn = pickle.load(open(knn_model_weight, 'rb'))
+    knn = pickle.load(open(classifier, 'rb'))
 
     classes_name = load_text_file(class_names)
     y_pred = knn.predict(embedding)
@@ -111,9 +111,9 @@ def main():
     config = load_config('config/script_parametrs.yaml')
     get_predict(
         config['img_path'],
-        config['triplet_model_weight'],
-        config['knn_model_weight'],
-        config['class_name'])
+        config['feature_extractor'],
+        config['classifier'],
+        config['class_names'])
     show_predict('data_file.json')
 
 if __name__ == '__main__':

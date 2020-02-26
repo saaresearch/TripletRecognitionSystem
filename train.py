@@ -93,7 +93,7 @@ def main():
 
     config = load_config('config/train_parametrs.yaml')
 
-    fix_random_seed(config['random_seed'], config['cudn_determenistic'])
+    fix_random_seed(config['random_seed'], config['cudnn_deterministic'])
 
     print("Extract data")
     unzip_data(config['data_zip_path'], config['data_save_path'])
@@ -161,7 +161,7 @@ def main():
     scheduler = torch.optim.lr_scheduler.StepLR(
         optimizer, step_size=7, gamma=0.1)
     print("Train model")
-    fix_random_seed(config['random_seed'], config['cudn_determenistic'])
+    fix_random_seed(config['random_seed'], config['cudnn_deterministic'])
     loss_history = []
     trainer = TripletTrainer(model=model,
                              optimizer=optimizer,
