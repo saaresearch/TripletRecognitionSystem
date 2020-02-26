@@ -169,7 +169,7 @@ def main():
                              epochs=config['epochs'],
                              test_triplet_loader=tri_test_load,
                              batch_size=config['batch_size'],
-                             KNN_train_data_load=train_loader,
+                             knn_train_loader=train_loader,
                              KNN_test_data_load=test_loader,
                              scheduler=scheduler,
                              nameofplotclasses=test_ds.classes,

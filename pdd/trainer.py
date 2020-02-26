@@ -41,8 +41,8 @@ class TripletTrainer(object):
                  epochs,
                  test_triplet_loader,
                  batch_size,
-                 KNN_train_data_load,
-                 KNN_test_data_load,
+                 knn_train_loader,
+                 knn_test_loader,
                  scheduler,
                  nameofplotclasses,
                  num_classes,
@@ -60,8 +60,8 @@ class TripletTrainer(object):
         self.tri_train_load = train_triplet_loader
         self.tri_test_load = test_triplet_loader
         self.batch_size = batch_size
-        self.train_loader = KNN_train_data_load
-        self.test_loader = KNN_test_data_load
+        self.train_loader = knn_train_loader
+        self.test_loader = knn_test_loader
 #         self.scheduler=scheduler
         self.nameofplotClasses = nameofplotclasses
         self.num_classes = num_classes
