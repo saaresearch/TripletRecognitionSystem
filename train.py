@@ -176,7 +176,10 @@ def main():
                              num_classes=config['num_classes'],
                              miner=miner,
                              loss_history=loss_history,
-                             safe_plot_img_path=config['plot_embeddings_img'])
+                             safe_plot_img_path=config['plot_embeddings_img'],
+                             model_save_path=config['model_save_path'],
+                             optim_save_path=config['optim_save_path']
+                             )
 
     trainer.train()
 

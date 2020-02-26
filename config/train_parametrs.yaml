@@ -29,3 +29,9 @@ epochs: 1000
 
 # Path to save the plot with embeddings
 plot_embeddings_img: './PDD.png'
+
+# Path to save model parametrs 
+model_save_path: 'triplet_model_param.pt'
+
+# Path to save optimizer parametrs
+optim_save_path: 'triplet_model_param.pt'

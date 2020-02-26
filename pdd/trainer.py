@@ -28,9 +28,9 @@ def forward_inputs_into_model(loader, model, device, batch_size):
     return np.vstack(X), np.hstack(y)
 
 
-def save_model(model, optimizer):
-    torch.save(model.state_dict(), 'triplet_weight.pt')
-    torch.save(optimizer.state_dict, 'optim.pt')
+def save_model(model, optimizer,model_save_path,optim_save_path):
+    torch.save(model.state_dict(), model_save_path)
+    torch.save(optimizer.state_dict, optim_save_path)
 
 
 class TripletTrainer(object):
@@ -48,7 +48,9 @@ class TripletTrainer(object):
                  num_classes,
                  miner,
                  loss_history,
-                 safe_plot_img_path
+                 safe_plot_img_path,
+                 model_save_path,
+                 optim_save_path
                  ):
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.model = model.to(self.device)
@@ -66,6 +68,8 @@ class TripletTrainer(object):
         self.miner = miner
         self.loss_history = loss_history
         self.safe_plot_img_path=safe_plot_img_path
+        self.model_save_path=model_save_path
+        self.optim_save_path=optim_save_path
 
     def train(self):
         for e in tqdm(range(self.epochs), desc='Epoch'):
@@ -107,7 +111,7 @@ class TripletTrainer(object):
             self.validating_phase()
 
             if e % 5 == 0 and e > 0:
-                save_model(self.model, self.optimizer)
+                save_model(self.model, self.optimizer,self.model_save_path,self.optim_save_path)
 
     def train_phase(self):
        
