@@ -14,7 +14,7 @@ COLORS = ['#00ffff', '#000000', '#0000ff', '#ff00ff',
           '#c0c0c0', '#008080', '#ffff00']
 
 
-def forward_inputs_into_model(loader, model, device, batchsize):
+def forward_inputs_into_model(loader, model, device, batch_size):
     X = []
     y = []
     with torch.no_grad():
@@ -22,7 +22,7 @@ def forward_inputs_into_model(loader, model, device, batchsize):
             inputs, targets = inputs.to(device), targets.to(device)
             outputs = model(inputs).detach().cpu().numpy()
             targets = targets.detach().cpu().numpy()
-            if (outputs.shape[0] == batchsize):
+            if (outputs.shape[0] == batch_size):
                 X.append(outputs)
                 y.append(targets)
     return np.vstack(X), np.hstack(y)
