@@ -170,7 +170,7 @@ def main():
                              test_triplet_loader=tri_test_load,
                              batch_size=config['batch_size'],
                              knn_train_loader=train_loader,
-                             KNN_test_data_load=test_loader,
+                             knn_test_loader=test_loader,
                              scheduler=scheduler,
                              nameofplotclasses=test_ds.classes,
                              num_classes=config['num_classes'],
