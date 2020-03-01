@@ -57,8 +57,8 @@ class TripletTrainer(object):
         self.optimizer = optimizer
         # self.loss = loss
         self.epochs = epochs
-        self.tri_train_load = train_triplet_loader
-        self.tri_test_load = test_triplet_loader
+        self.train_triplet_loader = train_triplet_loader
+        self.test_triplet_loader = test_triplet_loader
         self.batch_size = batch_size
         self.knn_train_loader = knn_train_loader
         self.knn_test_loader = knn_test_loader
@@ -111,16 +111,16 @@ class TripletTrainer(object):
             self.validating_phase()
 
             if e % 5 == 0 and e > 0:
-                save_model(self.model, self.optimizer,self.model_save_path,self.optim_save_path)
+                save_model(self.model, self.optimizer, self.model_save_path, self.optim_save_path)
 
     def train_phase(self):
        
-        train_n = len(self.tri_train_load)
+        train_n = len(self.train_triplet_loader)
         train_loss = 0.
         train_frac_pos = 0.
 
         self.model.train()
-        with tqdm(self.tri_train_load, desc='Batch') as b_pbar:
+        with tqdm(self.train_triplet_loader, desc='Batch') as b_pbar:
             for b, batch in enumerate(b_pbar):
                 self.optimizer.zero_grad()
 
@@ -145,11 +145,11 @@ class TripletTrainer(object):
                 )
 
     def validating_phase(self):
-        val_n = len(self.tri_test_load)
+        val_n = len(self.ttest_triplet_loaderri_test_load)
         val_loss = 0.
         val_frac_pos = 0.
         self.model.eval()
-        with tqdm(self.tri_test_load, desc='val') as b_pbar:
+        with tqdm(self.ttest_triplet_loaderri_test_load, desc='val') as b_pbar:
             for b, batch in enumerate(b_pbar):
                 labels, data = batch
                 labels = torch.cat([label for label in labels], axis=0)
