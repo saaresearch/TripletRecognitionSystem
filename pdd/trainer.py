@@ -60,8 +60,8 @@ class TripletTrainer(object):
         self.tri_train_load = train_triplet_loader
         self.tri_test_load = test_triplet_loader
         self.batch_size = batch_size
-        self.train_loader = knn_train_loader
-        self.test_loader = knn_test_loader
+        self.knn_train_loader = knn_train_loader
+        self.knn_test_loader = knn_test_loader
 #         self.scheduler=scheduler
         self.nameofplotClasses = nameofplotclasses
         self.num_classes = num_classes
@@ -74,9 +74,9 @@ class TripletTrainer(object):
     def train(self):
         for e in tqdm(range(self.epochs), desc='Epoch'):
 
-            test_em, test_labels = forward_inputs_into_model(self.test_loader, self.model,
+            test_em, test_labels = forward_inputs_into_model(self.knn_test_loader, self.model,
                                                              self.device, self.batch_size)
-            train_em, train_labels = forward_inputs_into_model(self.train_loader, self.model,
+            train_em, train_labels = forward_inputs_into_model(self.knn_train_loader, self.model,
                                                                self.device, self.batch_size)
             knn_acc(
                 test_em,
