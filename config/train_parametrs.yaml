@@ -9,7 +9,7 @@ num_classes: 15
 # Path to the archive with data
 data_zip_path: 'archive_full.zip'
 
-# Path to the dircectory to save files
+# Path to the directory to save files
 data_save_path: 'data/'
 
 # Fraction of the test dataset

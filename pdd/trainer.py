@@ -38,7 +38,7 @@ class TripletTrainer(object):
                  knn_train_loader,
                  knn_test_loader,
                  scheduler,
-                 nameofplotclasses,
+                 plot_classes_name,
                  num_classes,
                  miner,
                  loss_history,
@@ -59,7 +59,7 @@ class TripletTrainer(object):
         self.knn_train_loader = knn_train_loader
         self.knn_test_loader = knn_test_loader
 #         self.scheduler=scheduler
-        self.plot_classes_name = nameofplotclasses
+        self.plot_classes_name = plot_classes_name
         self.num_classes = num_classes
         self.miner = miner
         self.loss_history = loss_history
