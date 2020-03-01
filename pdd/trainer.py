@@ -142,11 +142,11 @@ class TripletTrainer(object):
                 )
 
     def validating_phase(self):
-        val_n = len(self.ttest_triplet_loaderri_test_load)
+        val_n = len(self.test_triplet_loader)
         val_loss = 0.
         val_frac_pos = 0.
         self.model.eval()
-        with tqdm(self.ttest_triplet_loaderri_test_load, desc='val') as b_pbar:
+        with tqdm(self.test_triplet_loader, desc='val') as b_pbar:
             for b, batch in enumerate(b_pbar):
                 labels, data = batch
                 labels = torch.cat([label for label in labels], axis=0)
