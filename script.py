@@ -8,11 +8,12 @@ from skimage.transform import resize
 import torch
 from scipy.spatial.distance import cosine
 import pickle
-from torchvision import transforms
-from torchvision import transforms, datasets
+from torchvision import (
+    transforms, 
+)
 from pdd.data_utils import load_config
 from pdd.data_utils import write_json_file
-import json
+from json import load
 
 
 def load_image(infilename):
@@ -36,7 +37,7 @@ def load_text_file(filename):
 
 def show_predict(filename):
     with open(filename) as f:
-        items = json.load(f)
+        items = load(f)
     print('\033[1m' + "Network prediction:")
     item_prediction = items['prediction']
     print('\033[0m' + "Class label:", item_prediction['label'])
@@ -59,8 +60,6 @@ def create_json_file(label, class_name, knn_model, distances, indices,savefile_n
         "prediction": {
             "label": str(label),
             "class_name": str(class_name[label])
-
-
         },
         "knn parameters":
         {
@@ -78,7 +77,6 @@ def create_json_file(label, class_name, knn_model, distances, indices,savefile_n
                 indices[0][3]), "distance": "%.4f" % (distances[0][3])},
             {"label": str(knn_model._y[indices[0][4]]), "index":str(
                 indices[0][4]), "distance": "%.4f" % (distances[0][4])}
-
         ]
 
     }
