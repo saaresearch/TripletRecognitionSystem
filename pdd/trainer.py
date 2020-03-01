@@ -58,7 +58,7 @@ class TripletTrainer(object):
         self.knn_train_loader = knn_train_loader
         self.knn_test_loader = knn_test_loader
 #         self.scheduler=scheduler
-        self.nameofplotClasses = nameofplotclasses
+        self.plot_classes_name = nameofplotclasses
         self.num_classes = num_classes
         self.miner = miner
         self.loss_history = loss_history
@@ -93,14 +93,14 @@ class TripletTrainer(object):
             plot(
                 train_em,
                 train_labels,
-                self.nameofplotClasses,
+                self.plot_classes_name,
                 'train_embeddings',
                 self.plot_points_colors,
                 self.safe_plot_img_path)
             plot(
                 test_em,
                 test_labels,
-                self.nameofplotClasses,
+                self.plot_classes_name,
                 'test_embeddings',
                 self.plot_points_colors,
                 self.safe_plot_img_path)
