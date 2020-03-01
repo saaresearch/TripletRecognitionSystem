@@ -7,6 +7,7 @@ from tqdm import tqdm
 COUNT_NEIGHBOR_EXP_1 = 1
 COUNT_NEIGHBOR_EXP_2 = 3
 
+
 def forward_inputs_into_model(loader, model, device, batch_size):
     X = []
     y = []
@@ -21,7 +22,7 @@ def forward_inputs_into_model(loader, model, device, batch_size):
     return np.vstack(X), np.hstack(y)
 
 
-def save_model(model, optimizer,model_save_path,optim_save_path):
+def save_model(model, optimizer, model_save_path, optim_save_path):
     torch.save(model.state_dict(), model_save_path)
     torch.save(optimizer.state_dict, optim_save_path)
 
@@ -62,11 +63,11 @@ class TripletTrainer(object):
         self.num_classes = num_classes
         self.miner = miner
         self.loss_history = loss_history
-        self.safe_plot_img_path=safe_plot_img_path
-        self.model_save_path=model_save_path
-        self.optim_save_path=optim_save_path
-        self.plot_points_colors=plot_points_colors
-        self.knn_metric=knn_metric
+        self.safe_plot_img_path = safe_plot_img_path
+        self.model_save_path = model_save_path
+        self.optim_save_path = optim_save_path
+        self.plot_points_colors = plot_points_colors
+        self.knn_metric = knn_metric
 
     def train(self):
         for e in tqdm(range(self.epochs), desc='Epoch'):
@@ -108,10 +109,14 @@ class TripletTrainer(object):
             self.validating_phase()
 
             if e % 5 == 0 and e > 0:
-                save_model(self.model, self.optimizer, self.model_save_path, self.optim_save_path)
+                save_model(
+                    self.model,
+                    self.optimizer,
+                    self.model_save_path,
+                    self.optim_save_path)
 
     def train_phase(self):
-       
+
         train_n = len(self.train_triplet_loader)
         train_loss = 0.
         train_frac_pos = 0.
