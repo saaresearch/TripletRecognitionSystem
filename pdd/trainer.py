@@ -1,18 +1,11 @@
 from .metrics import knn_acc
 from .plot import plot
 import numpy as np
-from scipy.spatial.distance import cosine
 import torch
 from tqdm import tqdm
 
 COUNT_NEIGHBOR_EXP_1 = 1
 COUNT_NEIGHBOR_EXP_2 = 3
-METRIC_KNN = cosine
-COLORS = ['#00ffff', '#000000', '#0000ff', '#ff00ff',
-          '#808080', '#008000', '#00ff00', '#800000',
-          '#000080', '#808000', '#800080', '#ff0000',
-          '#c0c0c0', '#008080', '#ffff00']
-
 
 def forward_inputs_into_model(loader, model, device, batch_size):
     X = []
@@ -50,7 +43,9 @@ class TripletTrainer(object):
                  loss_history,
                  safe_plot_img_path,
                  model_save_path,
-                 optim_save_path
+                 optim_save_path,
+                 plot_points_colors,
+                 knn_metric
                  ):
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.model = model.to(self.device)
@@ -70,6 +65,8 @@ class TripletTrainer(object):
         self.safe_plot_img_path=safe_plot_img_path
         self.model_save_path=model_save_path
         self.optim_save_path=optim_save_path
+        self.plot_points_colors=plot_points_colors
+        self.knn_metric=knn_metric
 
     def train(self):
         for e in tqdm(range(self.epochs), desc='Epoch'):
@@ -84,28 +81,28 @@ class TripletTrainer(object):
                 train_em,
                 train_labels,
                 COUNT_NEIGHBOR_EXP_1,
-                METRIC_KNN)
+                self.knn_metric),
             knn_acc(
                 test_em,
                 test_labels,
                 train_em,
                 train_labels,
                 COUNT_NEIGHBOR_EXP_2,
-                METRIC_KNN)
+                self.knn_metric)
 
             plot(
                 train_em,
                 train_labels,
                 self.nameofplotClasses,
                 'train_embeddings',
-                COLORS,
+                self.plot_points_colors,
                 self.safe_plot_img_path)
             plot(
                 test_em,
                 test_labels,
                 self.nameofplotClasses,
                 'test_embeddings',
-                COLORS,
+                self.plot_points_colors,
                 self.safe_plot_img_path)
             self.train_phase()
             self.validating_phase()

@@ -35,3 +35,12 @@ model_save_path: 'triplet_model_param.pt'
 
 # Path to save optimizer parametrs
 optim_save_path: 'triplet_model_param.pt'
+
+# Colors of points on plot 
+point_colors: ['#00ffff', '#000000', '#0000ff', '#ff00ff',
+          '#808080', '#008000', '#00ff00', '#800000',
+          '#000080', '#808000', '#800080', '#ff0000',
+          '#c0c0c0', '#008080', '#ffff00']
+
+knn_metric: 'cosine'
+         
