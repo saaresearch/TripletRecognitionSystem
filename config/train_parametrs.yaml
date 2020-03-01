@@ -1,8 +1,6 @@
 
-#Random seed
 random_seed: 13
 
-# Cudnn_deterministic
 cudnn_deterministic: True 
 
 # Number of classes to classify
@@ -14,14 +12,13 @@ data_zip_path: 'archive_full.zip'
 # Path to the dircectory to save files
 data_save_path: 'data/'
 
-# The size of the test data as a percentage
+# Fraction of the test dataset
 test_size: 0.2
 
 # Number of sample per draw ( to increase probability to
 #               contain valid triplets in a batch )
 n_sample: 3
 
-# Batch size
 batch_size: 12
 
 # Count of epochs:
