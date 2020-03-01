@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot(embeddings, labels, class_names, name, colors,save_img_path):
+def plot(embeddings, labels, class_names, name, colors, save_img_path):
     fig = plt.figure(figsize=(10, 10))
     for i in range(len(class_names)):
         inds = np.where(labels == i)[0]

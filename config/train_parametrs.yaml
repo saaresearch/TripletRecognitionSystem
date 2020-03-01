@@ -34,7 +34,7 @@ plot_embeddings_img: './PDD.png'
 model_save_path: 'triplet_model_param.pt'
 
 # Path to save optimizer parametrs
-optim_save_path: 'triplet_model_param.pt'
+optim_save_path: 'triplet_optim_param.pt'
 
 # Colors of points on plot 
 point_colors: ['#00ffff', '#000000', '#0000ff', '#ff00ff',
