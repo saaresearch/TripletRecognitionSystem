@@ -11,6 +11,7 @@ import pickle
 from torchvision import transforms
 from torchvision import transforms, datasets
 from pdd.data_utils import load_config
+from pdd.data_utils import write_json_file
 import json
 
 
@@ -52,7 +53,7 @@ def show_predict(filename):
               "Distance:", str(predict['distance']), sep="  ")
 
 
-def create_json_file(label, class_name, knn_model, distances, indices):
+def create_json_file(label, class_name, knn_model, distances, indices,savefile_name):
 
     data = {
         "prediction": {
@@ -63,8 +64,8 @@ def create_json_file(label, class_name, knn_model, distances, indices):
         },
         "knn parameters":
         {
-            "n_neighbors": str(knn_model.n_neighbors),
-            "metrics": str(knn_model.metric.__name__)
+            "n_neighbors": knn_model.n_neighbors,
+            "metrics": knn_model.metric.__name__
         },
         "topn": [
             {"label": str(knn_model._y[indices[0][0]]), "index":str(
@@ -81,11 +82,11 @@ def create_json_file(label, class_name, knn_model, distances, indices):
         ]
 
     }
-    with open("data_file.json", "w") as write_file:
-        json.dump(data, write_file, indent=2)
+    write_json_file(savefile_name,data,2)
+   
 
 
-def get_predict(img_name, feature_extractor, classifier, class_names):
+def get_predict(img_name, feature_extractor, classifier, class_names,prediction_savefile):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model = PDDModel(1280, 15, True)
     knn = KNeighborsClassifier(3, metric=cosine)
@@ -101,7 +102,7 @@ def get_predict(img_name, feature_extractor, classifier, class_names):
     classes_name = load_text_file(class_names)
     y_pred = knn.predict(embedding)
     distances, indices = knn.kneighbors(embedding[[0]], n_neighbors=10)
-    create_json_file(y_pred[0], classes_name, knn, distances, indices)
+    create_json_file(y_pred[0], classes_name, knn, distances, indices,prediction_savefile)
     
 
 
@@ -113,7 +114,8 @@ def main():
         config['img_path'],
         config['feature_extractor'],
         config['classifier'],
-        config['class_names'])
+        config['class_names'],
+        config['prediction_savefile'])
     show_predict('data_file.json')
 
 if __name__ == '__main__':

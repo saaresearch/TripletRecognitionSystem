@@ -6,6 +6,8 @@ from torch.utils.data import Sampler
 from torchvision.datasets import ImageFolder
 from yaml import load
 from yaml import FullLoader
+from json import dump
+
 
 def unzip_data(data_zip_path, data_path):
         os.system("unzip %s -d %s" % (data_zip_path, data_path))
@@ -14,6 +16,9 @@ def load_config(config_file):
     with open(config_file) as f:
         return load(f, Loader=FullLoader)
 
+def write_json_file(filename,data,indent):
+    with open(filename, "w") as write_file:
+        dump(data, write_file, indent=indent)
 
 
 class AllCropsDataset(Dataset):

@@ -10,3 +10,7 @@ classifier: knn_model.sav
 
 # Path to file with class names
 class_names: classname.txt
+
+#Path to save prediction 
+prediction_savefile: data_file.json
+
