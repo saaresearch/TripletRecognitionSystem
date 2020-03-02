@@ -30,10 +30,10 @@ epochs: 1000
 # Path to save the plot with embeddings
 plot_embeddings_img: './PDD.png'
 
-# Path to save model parametrs 
+# Path to save model parameters 
 model_save_path: 'triplet_model_param.pt'
 
-# Path to save optimizer parametrs
+# Path to save optimizer parameters
 optim_save_path: 'triplet_model_param.pt'
 
 # Colors of points on plot 

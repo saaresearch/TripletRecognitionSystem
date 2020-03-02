@@ -29,21 +29,12 @@ from pdd.data_utils import load_config
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
-# def load_config(config_file):
-#     with open(config_file) as f:
-#         return yaml.load(f, Loader=yaml.FullLoader)
-
-
 def fix_random_seed(seed, cudnn_determenistic=False):
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
     torch.backends.cudnn.deterministic = cudnn_determenistic
-
-
-# def unzip_data(data_zip_path, data_path):
-#     os.system("unzip %s -d %s" % (data_zip_path, data_path))
 
 
 def prepare_datasets(data_path):
@@ -91,7 +82,7 @@ def split_on_train_and_test(random_seed, data_path, test_size):
 
 def main():
 
-    config = load_config('config/train_parametrs.yaml')
+    config = load_config('config/train_parameters.yaml')
 
     fix_random_seed(config['random_seed'], config['cudnn_deterministic'])
 
@@ -185,7 +176,6 @@ def main():
 
     trainer.train()
 
-# if __name__ == "__main__":
 
-
-main()
+if __name__ == "__main__":
+    main()

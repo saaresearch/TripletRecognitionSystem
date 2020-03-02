@@ -95,7 +95,7 @@ def get_predict(img_name, feature_extractor, classifier, class_names, topn):
     
 
 def main():
-    config = load_config('config/script_parametrs.yaml')
+    config = load_config('config/script_parameters.yaml')
     pred = get_predict(
         config['img_path'],
         config['feature_extractor'],
