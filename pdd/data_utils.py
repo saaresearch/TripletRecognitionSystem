@@ -16,7 +16,7 @@ def load_config(config_file):
     with open(config_file) as f:
         return load(f, Loader=FullLoader)
 
-def write_json_file(filename,data,indent):
+def write_json_file(filename, data, indent=2):
     with open(filename, "w") as write_file:
         dump(data, write_file, indent=indent)
 
