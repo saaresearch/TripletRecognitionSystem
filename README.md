@@ -10,8 +10,8 @@ python -m venv .env
 ```
 
 3. Activate environment
-    - on windows: `.env\Scripts\activate`;
-    - on linux/mac: `.env/bin/activate`;
+    - on windows: `.env\Scripts\activate`
+    - on linux/mac: `source .env/bin/activate`
 
 4. Install dependencies:
 
