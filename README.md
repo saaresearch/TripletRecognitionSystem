@@ -2,7 +2,7 @@
 
 ## Local setup
 
-1. Install Python **>=3.6.5 and <=3.7**
+1. Install Python **>=3.6.5 and <3.7**
 2. Create virtual environment:
 
 ```console
