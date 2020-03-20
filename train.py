@@ -154,16 +154,16 @@ def main():
     print("Train model")
     fix_random_seed(config['random_seed'], config['cudnn_deterministic'])
     loss_history = []
-    trainer = TripletTrainer(model=model,
-                             optimizer=optimizer,
-                             train_triplet_loader=tri_train_load,
-                             epochs=config['epochs'],
+    trainer = TripletTrainer(model = model,
+                             optimizer = optimizer,
+                             train_triplet_loader =tri_train_load,
+                             epochs = config['epochs'],
                              test_triplet_loader=tri_test_load,
                              batch_size=config['batch_size'],
                              knn_train_loader=train_loader,
                              knn_test_loader=test_loader,
                              scheduler=scheduler,
-                             nameofplotclasses=test_ds.classes,
+                             plot_classes_name = test_ds.classes,
                              num_classes=config['num_classes'],
                              miner=miner,
                              loss_history=loss_history,
@@ -178,4 +178,7 @@ def main():
 
 
 if __name__ == "__main__":
+
     main()
+
+

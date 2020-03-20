@@ -1,0 +1,17 @@
+cycler==0.10.0
+joblib==0.14.1
+kiwisolver==1.1.0
+matplotlib==3.1.1
+numpy==1.17.2
+Pillow==6.2.2
+pyparsing==2.4.6
+python-dateutil==2.8.1
+PyYAML==5.3
+scikit-learn==0.21.3
+scipy==1.4.1
+six==1.14.0
+sklearn==0.0
+torch==1.2.0+cu92
+torchvision==0.4.0+cu92
+tqdm==4.36.1
+TripletTorch==0.1.3

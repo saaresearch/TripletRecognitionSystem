@@ -1,0 +1,19 @@
+
+# Path to image for classify
+img_path: d:/DATASETS/PDD/train/powdery_mildew/ 5.jpg
+
+# Path to feature extractor model 
+feature_extractor: c:/Users/Pc_Home/Downloads/Telegram Desktop/triplet.pt
+
+# Path to classifier model 
+classifier: c:/Users/Pc_Home/Downloads/Telegram Desktop/knn_model.sav
+
+# How many of the nearest points are required for the extraction
+topn: 10
+
+# Path to file with class names
+class_names: c:/Users/Pc_Home/Downloads/Telegram Desktop/classname.txt
+
+#Path to save prediction 
+prediction_savefile: data_file.json # or False if not save
+
