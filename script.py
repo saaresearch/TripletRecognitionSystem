@@ -95,7 +95,7 @@ def get_predict(img_name, feature_extractor, classifier, class_names, topn):
     
 
 def main():
-    config = load_config('config/script_parametrs.yaml')
+    config = load_config('config/script_parameters.yaml')
     pred = get_predict(
         config['img_path'],
         config['feature_extractor'],
@@ -105,7 +105,7 @@ def main():
     )
     show_predict(pred)
     if config['prediction_savefile']:
-        write_json_file(config['prediction_savefile'], pred,4)
+        write_json_file(config['prediction_savefile'], pred)
 
 
 if __name__ == '__main__':
