@@ -105,7 +105,7 @@ def main():
     )
     show_predict(pred)
     if config['prediction_savefile']:
-        write_json_file(config['prediction_savefile'], pred)
+        write_json_file(config['prediction_savefile'], pred,4)
 
 
 if __name__ == '__main__':

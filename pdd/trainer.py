@@ -4,6 +4,7 @@ import numpy as np
 import torch
 from tqdm import tqdm
 
+
 COUNT_NEIGHBOR_EXP_1 = 1
 COUNT_NEIGHBOR_EXP_2 = 3
 
@@ -26,6 +27,8 @@ def save_model(model, optimizer, model_save_path, optim_save_path):
     torch.save(model.state_dict(), model_save_path)
     torch.save(optimizer.state_dict, optim_save_path)
 
+
+    
 
 class TripletTrainer(object):
     def __init__(self,
@@ -90,7 +93,7 @@ class TripletTrainer(object):
                 train_labels,
                 COUNT_NEIGHBOR_EXP_2,
                 self.knn_metric)
-
+            
             plot(
                 train_em,
                 train_labels,
@@ -107,7 +110,7 @@ class TripletTrainer(object):
                 self.safe_plot_img_path)
             self.train_phase()
             self.validating_phase()
-
+            
             if e % 5 == 0 and e > 0:
                 save_model(
                     self.model,

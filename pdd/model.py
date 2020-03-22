@@ -3,6 +3,23 @@ import torch
 import torch.nn as nn
 from torchvision.models import mobilenet_v2
 
+import torch.nn as nn
+import torch.nn.functional as F
+
+class Perceptron_classifier(nn.Module):
+    def __init__(self, emmbeding_size, num_classes):
+        super().__init__()
+        self.fc1 = nn.Linear(1280, 512)
+        self.fc2 = nn.Linear(512, 84)
+        self.fc3 = nn.Linear(84, 15)
+
+    def forward(self, x):
+        # x = x.view(-1, 16 * 5 * 5)
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = self.fc3(x)
+        # return x
+        return F.log_softmax(x,dim = 1)
 
 class PDDModel(nn.Module):
 
@@ -45,3 +62,29 @@ class PDDModel(nn.Module):
         res = self.model.classifier(features)
 
         return res
+
+def get_trained_model(model, feature_extractor, device):
+    model.load_state_dict(
+        torch.load(
+            feature_extractor,
+            map_location=device))
+    model.eval()
+    return model
+
+class PDD(nn.Module):
+
+    """ 
+    This model based on architecture MobileNetV2
+    """
+    def __init__(self, emmbeding_model, classifier_model, embedding_size, num_classes, pdd_param, classifier_param,device):
+        super(PDD, self).__init__()
+        self.emmbeding_model = get_trained_model(emmbeding_model, pdd_param, device)
+        self.classifier_model = get_trained_model(classifier_model, classifier_param, device)
+        
+
+    def forward(self, inputs):
+        x = self.emmbeding_model(inputs)
+        x = self.classifier_model(x)
+        return x
+
+      
