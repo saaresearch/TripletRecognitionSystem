@@ -2,9 +2,10 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torchvision.models import mobilenet_v2
-
+from torch.jit import trace
 import torch.nn as nn
 import torch.nn.functional as F
+from collections import OrderedDict
 
 class Perceptron_classifier(nn.Module):
     def __init__(self, emmbeding_size, num_classes):
@@ -20,7 +21,7 @@ class Perceptron_classifier(nn.Module):
         x = self.fc3(x)
         # return x
         return F.log_softmax(x,dim = 1)
-
+# @torch.jit.script
 class PDDModel(nn.Module):
 
     """ 
@@ -43,15 +44,12 @@ class PDDModel(nn.Module):
         output = _output.view(input_size)
 
         return output
-
+    
     def forward(self, x):
         x = self.model.features(x)
         x = x.view(x.size(0), -1)
         x = self.model.fc(x)
-
         self.features = self.l2_norm(x)
-        # Multiply by alpha = 10 as suggested in
-        # https://arxiv.org/pdf/1703.09507.pdf
         alpha = 10
         self.features = self.features * alpha
 
@@ -63,6 +61,9 @@ class PDDModel(nn.Module):
 
         return res
 
+
+
+
 def get_trained_model(model, feature_extractor, device):
     model.load_state_dict(
         torch.load(
@@ -71,20 +72,4 @@ def get_trained_model(model, feature_extractor, device):
     model.eval()
     return model
 
-class PDD(nn.Module):
 
-    """ 
-    This model based on architecture MobileNetV2
-    """
-    def __init__(self, emmbeding_model, classifier_model, embedding_size, num_classes, pdd_param, classifier_param,device):
-        super(PDD, self).__init__()
-        self.emmbeding_model = get_trained_model(emmbeding_model, pdd_param, device)
-        self.classifier_model = get_trained_model(classifier_model, classifier_param, device)
-        
-
-    def forward(self, inputs):
-        x = self.emmbeding_model(inputs)
-        x = self.classifier_model(x)
-        return x
-
-      
