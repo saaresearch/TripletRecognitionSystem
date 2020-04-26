@@ -68,7 +68,6 @@ class TripletTrainer(object):
         self.safe_plot_img_path = safe_plot_img_path
         self.model_save_path = model_save_path
         self.optim_save_path = optim_save_path
-        self.plot_points_colors = plot_points_colors
         self.knn_metric = knn_metric
 
     def train(self):
