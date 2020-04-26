@@ -1,28 +1,17 @@
 
 import numpy as np
 import torch
-import time
 import os
 import random
 
 from torch.utils.data import DataLoader
-from torchvision.models import mobilenet_v2
 from torchvision import transforms
-from torch import nn
-
-from triplettorch import HardNegativeTripletMiner
 from triplettorch import AllTripletMiner
-from torch.utils.data import DataLoader
 from triplettorch import TripletDataset
-
-from torchvision import datasets
-import matplotlib.pyplot as plt
-
 from pdd.train_test_split import datadir_train_test_split
 from pdd.data_utils import AllCropsDataset
 from pdd.model import PDDModel
 from pdd.trainer import TripletTrainer
-from pdd.metrics import knn_acc
 from pdd.data_utils import unzip_data
 from pdd.data_utils import load_config
 
@@ -154,16 +143,16 @@ def main():
     print("Train model")
     fix_random_seed(config['random_seed'], config['cudnn_deterministic'])
     loss_history = []
-    trainer = TripletTrainer(model = model,
-                             optimizer = optimizer,
-                             train_triplet_loader =tri_train_load,
-                             epochs = config['epochs'],
+    trainer = TripletTrainer(model=model,
+                             optimizer=optimizer,
+                             train_triplet_loader=tri_train_load,
+                             epochs=config['epochs'],
                              test_triplet_loader=tri_test_load,
                              batch_size=config['batch_size'],
                              knn_train_loader=train_loader,
                              knn_test_loader=test_loader,
                              scheduler=scheduler,
-                             plot_classes_name = test_ds.classes,
+                             plot_classes_name=test_ds.classes,
                              num_classes=config['num_classes'],
                              miner=miner,
                              loss_history=loss_history,
