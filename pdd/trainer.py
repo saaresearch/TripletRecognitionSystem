@@ -28,8 +28,6 @@ def save_model(model, optimizer, model_save_path, optim_save_path):
     torch.save(optimizer.state_dict, optim_save_path)
 
 
-    
-
 class TripletTrainer(object):
     def __init__(self,
                  model,
