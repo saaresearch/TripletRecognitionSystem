@@ -1,18 +1,15 @@
 
 # Path to image for classify
-img_path: script_test/gnil/gnil.jpg
+img_path: /home/artem/pdd/script_test/health/health3.jpg
 
-# Path to feature extractor model 
-feature_extractor: triplet.pt
-
-# Path to classifier model 
-classifier: knn_model.sav
+# Path to model 
+model: trace_pddmodel.pt
 
 # How many of the nearest points are required for the extraction
-topn: 10
+topn: 5
 
 # Path to file with class names
-class_names: classname.txt
+class_names: classname2.txt
 
 #Path to save prediction 
 prediction_savefile: data_file.json # or False if not save

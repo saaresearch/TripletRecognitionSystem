@@ -1,11 +1,8 @@
-import numpy as np
 import torch
 import torch.nn as nn
 from torchvision.models import mobilenet_v2
-from torch.jit import trace
-import torch.nn as nn
 import torch.nn.functional as F
-from collections import OrderedDict
+
 
 class Perceptron_classifier(nn.Module):
     def __init__(self, emmbeding_size, num_classes):
@@ -20,8 +17,10 @@ class Perceptron_classifier(nn.Module):
         x = F.relu(self.fc2(x))
         x = self.fc3(x)
         # return x
-        return F.log_softmax(x,dim = 1)
+        return F.log_softmax(x, dim=1)
 # @torch.jit.script
+
+
 class PDDModel(nn.Module):
 
     """ 
@@ -62,8 +61,6 @@ class PDDModel(nn.Module):
         return res
 
 
-
-
 def get_trained_model(model, feature_extractor, device):
     model.load_state_dict(
         torch.load(
@@ -71,5 +68,3 @@ def get_trained_model(model, feature_extractor, device):
             map_location=device))
     model.eval()
     return model
-
-
