@@ -142,7 +142,7 @@ def main():
     miner = AllTripletMiner(.5).cuda()
 
     print("Build computational graph")
-    model = PDDModel(1280, 15, True)
+    model = PDDModel(1280, len(train_ds.classes), True)
     # loss = torch.nn.NLLLoss()
     model = model.to(DEVICE)
     optimizer = torch.optim.Adam(
