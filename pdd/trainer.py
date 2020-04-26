@@ -48,7 +48,6 @@ class TripletTrainer(object):
                  safe_plot_img_path,
                  model_save_path,
                  optim_save_path,
-                 plot_points_colors,
                  knn_metric
                  ):
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -99,14 +98,12 @@ class TripletTrainer(object):
                 train_labels,
                 self.plot_classes_name,
                 'train_embeddings',
-                self.plot_points_colors,
                 self.safe_plot_img_path)
             plot(
                 test_em,
                 test_labels,
                 self.plot_classes_name,
                 'test_embeddings',
-                self.plot_points_colors,
                 self.safe_plot_img_path)
             self.train_phase()
             self.validating_phase()

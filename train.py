@@ -170,7 +170,6 @@ def main():
                              safe_plot_img_path=config['plot_embeddings_img'],
                              model_save_path=config['model_save_path'],
                              optim_save_path=config['optim_save_path'],
-                             plot_points_colors=config['point_colors'],
                              knn_metric=config['knn_metric']
                              )
 
