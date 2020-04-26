@@ -12,9 +12,11 @@ from json import dump
 def unzip_data(data_zip_path, data_path):
         os.system("unzip %s -d %s" % (data_zip_path, data_path))
 
+
 def load_config(config_file):
     with open(config_file) as f:
         return load(f, Loader=FullLoader)
+
 
 def write_json_file(filename, data, indent=2):
     with open(filename, "w") as write_file:
