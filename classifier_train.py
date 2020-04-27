@@ -46,10 +46,9 @@ def main():
         shuffle=True,
         num_workers=2)
 
-    modelpdd = PDDModel(1280, 15, True)
+    modelpdd = PDDModel(1280, config['num_classes'], True)
     modelclassifier = Perceptron_classifier(1280, config['num_classes'])
     modelpdd = get_trained_model(modelpdd, config_script['feature_extractor'],device)
-
     test_em, test_labels = forward_inputs_into_model(test_loader, modelpdd,
                                                              device, config['batch_size'])
     train_em, train_labels = forward_inputs_into_model(train_loader, modelpdd,
