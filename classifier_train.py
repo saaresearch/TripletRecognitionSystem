@@ -12,13 +12,14 @@ from pdd.model import Perceptron_classifier
 from torchbearer import Trial
 from torch.optim import Adam
 from pdd.trainer import forward_inputs_into_model
+from torchbearer.callbacks import Best
 
 
 def train_classifier(model, optimizer, criterion, metrics, train_em, train_labels, test_em, test_labels):
     # optimizer = Adam(model.parameters())
-    trial = Trial(model, optimizer=optimizer, criterion=criterion, metrics=['acc'])
-    trial.with_train_data(torch.Tensor(train_em), torch.Tensor(train_labels).long()).with_val_data(torch.Tensor(test_em), torch.Tensor(test_labels).long()).for_steps(100).run(10)
-    save_model(model, optimizer, 'classifier.pt', 'classifieroptim.pt')
+    checkpoint = Best('classifier.pt', monitor='val_acc', mode='max', save_model_params_only=True)
+    trial = Trial(model, callbacks=[checkpoint], optimizer=optimizer, criterion=criterion, metrics=['acc'])
+    trial.with_train_data(torch.Tensor(train_em), torch.Tensor(train_labels).long()).with_val_data(torch.Tensor(test_em), torch.Tensor(test_labels).long()).for_steps(100).run(40)
 
 
 def main():
