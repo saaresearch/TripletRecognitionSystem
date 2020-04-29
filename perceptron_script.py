@@ -38,11 +38,11 @@ def show_predict(predictions, topn, class_names):
         print(f'\t{top+1} {class_name[pred]}')
 
 
-def main():
+def get_topn_pred(img):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     config = load_config('config/script_percep_param.yaml')
     model = torch.jit.load(config['model'])
-    pred = get_predict(config['img_path'],
+    pred = get_predict(img,
                        model,                                                   
                        config['class_names'],
                        device)               
@@ -50,5 +50,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    get_topn_pred('image.jpg')
     

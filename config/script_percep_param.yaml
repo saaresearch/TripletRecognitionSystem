@@ -1,7 +1,3 @@
-
-# Path to image for classify
-img_path: /home/artem/pdd/script_test/health/health3.jpg
-
 # Path to model 
 model: trace_pddmodel.pt
 
