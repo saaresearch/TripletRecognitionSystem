@@ -9,7 +9,7 @@ class Perceptron_classifier(nn.Module):
         super().__init__()
         self.fc1 = nn.Linear(1280, 512)
         self.fc2 = nn.Linear(512, 84)
-        self.fc3 = nn.Linear(84, 15)
+        self.fc3 = nn.Linear(84, num_classes)
 
     def forward(self, x):
         # x = x.view(-1, 16 * 5 * 5)
