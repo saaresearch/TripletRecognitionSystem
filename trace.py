@@ -1,6 +1,5 @@
 from pdd.model import Perceptron_classifier
 from pdd.model import PDDModel
-from script import load_image
 from pdd.data_utils import load_config
 from pdd.model import get_trained_model
 import torch.nn as nn
@@ -14,10 +13,12 @@ def get_trace_model(embedding_model_path, classifier_model_path,
     embedding_model = PDDModel(1280, num_classes, True)
     classifier_model = Perceptron_classifier(1280, num_classes)
     model = nn.Sequential(OrderedDict([
-        ('embedding', get_trained_model(embedding_model, embedding_model_path, device)),
-        ('classifier', get_trained_model(
-            classifier_model, classifier_model_path, device)),
-    ]))
+        ('embedding', get_trained_model(embedding_model,
+                                        embedding_model_path,
+                                        device)),
+        ('classifier', get_trained_model(classifier_model,
+                                         classifier_model_path,
+                                         device)), ]))
     scripted_model = torch.jit.trace(model, torch.rand(1, 3, 256, 256))
     scripted_model.save(save_path)
 
