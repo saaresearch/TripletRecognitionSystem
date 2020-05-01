@@ -3,7 +3,6 @@ import torch.nn as nn
 from pdd.model import PDDModel
 from pdd.data_utils import unzip_data
 from pdd.data_utils import load_config
-from pdd.trainer import save_model
 from pdd.model import get_trained_model
 from train import prepare_datasets
 from train import fix_random_seed
@@ -15,11 +14,25 @@ from pdd.trainer import forward_inputs_into_model
 from torchbearer.callbacks import Best
 
 
-def train_classifier(model, optimizer, criterion, metrics, train_em, train_labels, test_em, test_labels):
+def train_classifier(model, optimizer, criterion, metrics,
+                     train_em, train_labels, test_em, test_labels):
     # optimizer = Adam(model.parameters())
-    checkpoint = Best('classifier.pt', monitor='val_acc', mode='max', save_model_params_only=True)
-    trial = Trial(model, callbacks=[checkpoint], optimizer=optimizer, criterion=criterion, metrics=['acc'])
-    trial.with_train_data(torch.Tensor(train_em), torch.Tensor(train_labels).long()).with_val_data(torch.Tensor(test_em), torch.Tensor(test_labels).long()).for_steps(100).run(40)
+    checkpoint = Best(
+        'classifier.pt',
+        monitor='val_acc',
+        mode='max',
+        save_model_params_only=True)
+    trial = Trial(
+        model,
+        callbacks=[checkpoint],
+        optimizer=optimizer,
+        criterion=criterion,
+        metrics=['acc'])
+    trial.with_train_data(
+        torch.Tensor(train_em),
+        torch.Tensor(train_labels).long()).with_val_data(
+        torch.Tensor(test_em),
+        torch.Tensor(test_labels).long()).for_steps(100).run(40)
 
 
 def main():
@@ -49,15 +62,24 @@ def main():
 
     modelpdd = PDDModel(1280, config['num_classes'], True)
     modelclassifier = Perceptron_classifier(1280, config['num_classes'])
-    modelpdd = get_trained_model(modelpdd, config_script['feature_extractor'],device)
+    modelpdd = get_trained_model(
+        modelpdd, config_script['feature_extractor'], device)
     test_em, test_labels = forward_inputs_into_model(test_loader, modelpdd,
-                                                             device, config['batch_size'])
+                                                     device, config['batch_size'])
     train_em, train_labels = forward_inputs_into_model(train_loader, modelpdd,
-                                                               device, config['batch_size'])
+                                                      device, config['batch_size'])
 
     optimizer = Adam(modelclassifier.parameters(), lr=0.001)
     criterion = nn.CrossEntropyLoss()
-    train_classifier(modelclassifier, optimizer, criterion, ['acc'], train_em, train_labels, test_em, test_labels)
+    train_classifier(
+        modelclassifier,
+        optimizer,
+        criterion,
+        ['acc'],
+        train_em,
+        train_labels,
+        test_em,
+        test_labels)
 
 
 if __name__ == "__main__":
