@@ -4,10 +4,10 @@ from script import load_class_names
 from pdd.data_utils import load_config
 
 
-def get_predict(img_name, model, class_names,   device):
+def get_predict(img_name, model, class_names, device):
     pred_list = []
     model.eval()
-    img = load_image(img_name) 
+    img = load_image(img_name)
     pred_list = model(img).sort(descending=True)[1].tolist()
     return pred_list[0]
 
@@ -25,9 +25,9 @@ def predforbot(image):
     config = load_config('config/script_percep_param.yaml')
     model = torch.jit.load(config['model'])
     pred = get_predict(image,
-                       model,                                                   
+                       model,
                        config['class_names'],
-                       device)  
+                       device)
     return (string_show_predict(pred, config['topn'], config['class_names']))
 
 
@@ -43,12 +43,11 @@ def get_topn_pred(img):
     config = load_config('config/script_percep_param.yaml')
     model = torch.jit.load(config['model'])
     pred = get_predict(img,
-                       model,                                                   
+                       model,
                        config['class_names'],
-                       device)               
+                       device)
     show_predict(pred, config['topn'], config['class_names'])
 
 
 if __name__ == '__main__':
     get_topn_pred('image.jpg')
-    

@@ -43,7 +43,7 @@ class PDDModel(nn.Module):
         output = _output.view(input_size)
 
         return output
-    
+  
     def forward(self, x):
         x = self.model.features(x)
         x = x.view(x.size(0), -1)

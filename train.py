@@ -37,7 +37,8 @@ def prepare_datasets(data_path):
             transforms.ToTensor(),
             # transforms.Normalize([0.4352, 0.5103, 0.2836], [0.2193, 0.2073,
             # 0.2047])]),
-            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]),
+            transforms.Normalize([0.485, 0.456, 0.406],
+                                 [0.229, 0.224, 0.225])]),
         target_transform=torch.tensor)
 
     test_ds = AllCropsDataset(
@@ -46,7 +47,8 @@ def prepare_datasets(data_path):
         transform=transforms.Compose([
             transforms.Resize(256),
             transforms.ToTensor(),
-            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]),
+            transforms.Normalize([0.485, 0.456, 0.406],
+                                 [0.229, 0.224, 0.225])]),
         target_transform=torch.tensor)
 
     # print statistics
@@ -168,5 +170,3 @@ def main():
 if __name__ == "__main__":
 
     main()
-
-

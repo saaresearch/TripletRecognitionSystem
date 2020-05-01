@@ -71,10 +71,14 @@ class TripletTrainer(object):
     def train(self):
         for e in tqdm(range(self.epochs), desc='Epoch'):
 
-            test_em, test_labels = forward_inputs_into_model(self.knn_test_loader, self.model,
-                                                             self.device, self.batch_size)
-            train_em, train_labels = forward_inputs_into_model(self.knn_train_loader, self.model,
-                                                               self.device, self.batch_size)
+            test_em, test_labels = forward_inputs_into_model(self.knn_test_loader,
+                                                             self.model,
+                                                             self.device,
+                                                             self.batch_size)
+            train_em, train_labels = forward_inputs_into_model(self.knn_train_loader,
+                                                               self.model,
+                                                               self.device,
+                                                               self.batch_size)
             knn_acc(
                 test_em,
                 test_labels,
@@ -88,7 +92,7 @@ class TripletTrainer(object):
                 train_em,
                 train_labels,
                 COUNT_NEIGHBOR_EXP_2,
-                self.knn_metric)           
+                self.knn_metric)
             plot(
                 train_em,
                 train_labels,
