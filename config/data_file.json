@@ -1,0 +1,62 @@
+{
+    "prediction": {
+        "label": 10,
+        "class_name": "Grape__Black rot"
+    },
+    "knn_parameters": {
+        "n_neighbors": 3,
+        "metrics": "cosine"
+    },
+    "topn": [
+        {
+            "label": 10,
+            "index": 173,
+            "distance": 0.001196594629090053
+        },
+        {
+            "label": 10,
+            "index": 181,
+            "distance": 0.002295453226233257
+        },
+        {
+            "label": 10,
+            "index": 277,
+            "distance": 0.0023222311008401775
+        },
+        {
+            "label": 10,
+            "index": 18,
+            "distance": 0.0028618463364489255
+        },
+        {
+            "label": 10,
+            "index": 283,
+            "distance": 0.003084220290936135
+        },
+        {
+            "label": 10,
+            "index": 46,
+            "distance": 0.003158154905241295
+        },
+        {
+            "label": 10,
+            "index": 374,
+            "distance": 0.003463178249226817
+        },
+        {
+            "label": 10,
+            "index": 241,
+            "distance": 0.003589922445177751
+        },
+        {
+            "label": 10,
+            "index": 441,
+            "distance": 0.003955380541668441
+        },
+        {
+            "label": 10,
+            "index": 390,
+            "distance": 0.004178164071737989
+        }
+    ]
+}
