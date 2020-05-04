@@ -10,7 +10,7 @@ from pdd.model import get_trained_model
 from train import prepare_datasets
 from train import fix_random_seed
 from train import split_on_train_and_test
-from pdd.model import Perceptron_classifier
+from pdd.model import MLP
 from pdd.trainer import forward_inputs_into_model
 
 
@@ -64,7 +64,7 @@ def main():
         num_workers=2)
 
     model_pdd = PDDModel(1280, config['num_classes'], True)
-    model_clf = Perceptron_classifier(1280, config['num_classes'])
+    model_clf = MLP(1280, config['num_classes'])
     model_pdd = get_trained_model(
         model_pdd, config_script['feature_extractor'], device)
     test_em, test_labels = forward_inputs_into_model(test_loader, model_pdd,

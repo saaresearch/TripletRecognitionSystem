@@ -1,10 +1,9 @@
-import torch
+from .metrics import knn_acc
+from .plot import plot
 import numpy as np
+import torch
 from tqdm import tqdm
 
-from pdd.metrics import knn_acc
-from pdd.plot import plot
-from pdd.model import save_model
 
 COUNT_NEIGHBOR_EXP_1 = 1
 COUNT_NEIGHBOR_EXP_2 = 3
@@ -24,6 +23,13 @@ def forward_inputs_into_model(loader, model, device, batch_size):
     return np.vstack(X), np.hstack(y)
 
 
+def save_model(model, optimizer, model_save_path, optim_save_path):
+    torch.save(model.state_dict(), model_save_path)
+    torch.save(optimizer.state_dict, optim_save_path)
+
+
+    
+
 class TripletTrainer(object):
     def __init__(self,
                  model,
@@ -42,6 +48,7 @@ class TripletTrainer(object):
                  safe_plot_img_path,
                  model_save_path,
                  optim_save_path,
+                 plot_points_colors,
                  knn_metric
                  ):
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -62,19 +69,16 @@ class TripletTrainer(object):
         self.safe_plot_img_path = safe_plot_img_path
         self.model_save_path = model_save_path
         self.optim_save_path = optim_save_path
+        self.plot_points_colors = plot_points_colors
         self.knn_metric = knn_metric
 
     def train(self):
         for e in tqdm(range(self.epochs), desc='Epoch'):
 
-            test_em, test_labels = forward_inputs_into_model(self.knn_test_loader,
-                                                             self.model,
-                                                             self.device,
-                                                             self.batch_size)
-            train_em, train_labels = forward_inputs_into_model(self.knn_train_loader,
-                                                               self.model,
-                                                               self.device,
-                                                               self.batch_size)
+            test_em, test_labels = forward_inputs_into_model(self.knn_test_loader, self.model,
+                                                             self.device, self.batch_size)
+            train_em, train_labels = forward_inputs_into_model(self.knn_train_loader, self.model,
+                                                               self.device, self.batch_size)
             knn_acc(
                 test_em,
                 test_labels,
@@ -89,20 +93,24 @@ class TripletTrainer(object):
                 train_labels,
                 COUNT_NEIGHBOR_EXP_2,
                 self.knn_metric)
+            
             plot(
                 train_em,
                 train_labels,
                 self.plot_classes_name,
                 'train_embeddings',
+                self.plot_points_colors,
                 self.safe_plot_img_path)
             plot(
                 test_em,
                 test_labels,
                 self.plot_classes_name,
                 'test_embeddings',
+                self.plot_points_colors,
                 self.safe_plot_img_path)
             self.train_phase()
             self.validating_phase()
+            
             if e % 5 == 0 and e > 0:
                 save_model(
                     self.model,

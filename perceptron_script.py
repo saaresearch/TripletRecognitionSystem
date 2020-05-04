@@ -12,25 +12,6 @@ def get_predict(img_name, model, class_names, device):
     return pred_list[0]
 
 
-def string_show_predict(predictions, topn, class_names):
-    class_name = load_class_names(class_names)
-    top_pred = f'TOP {topn} Network prediction:\n'
-    for top, pred in enumerate(predictions[:topn]):
-        top_pred = top_pred + f'\t{top+1} {class_name[pred]}\n'
-    return top_pred
-
-
-def predforbot(image):
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    config = load_config('config/script_percep_param.yaml')
-    model = torch.jit.load(config['model'])
-    pred = get_predict(image,
-                       model,
-                       config['class_names'],
-                       device)
-    return (string_show_predict(pred, config['topn'], config['class_names']))
-
-
 def show_predict(predictions, topn, class_names):
     class_name = load_class_names(class_names)
     print(f'TOP {topn} Network prediction:\n')

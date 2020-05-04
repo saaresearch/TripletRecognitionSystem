@@ -1,17 +1,18 @@
-from pdd.model import Perceptron_classifier
-from pdd.model import PDDModel
-from pdd.data_utils import load_config
-from pdd.model import get_trained_model
 import torch.nn as nn
 from collections import OrderedDict
 import torch
 
+from pdd.model import MLP
+from pdd.model import PDDModel
+from pdd.data_utils import load_config
+from pdd.model import get_trained_model
+from pdd.model import get_device
+
 
 def get_trace_model(embedding_model_path, classifier_model_path,
                     save_path, device, num_classes):
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
     embedding_model = PDDModel(1280, num_classes, True)
-    classifier_model = Perceptron_classifier(1280, num_classes)
+    classifier_model = MLP(1280, num_classes)
     model = nn.Sequential(OrderedDict([
         ('embedding', get_trained_model(embedding_model,
                                         embedding_model_path,
@@ -25,7 +26,7 @@ def get_trace_model(embedding_model_path, classifier_model_path,
 
 def main():
     config = load_config('config/trace_parameters.yaml')
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    device = get_device()
     get_trace_model(
         config['embedding_model'],
         config['classifier_model'],

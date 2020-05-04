@@ -1,9 +1,6 @@
-import numpy as np
 import pickle
 import torch
-import json
 
-from sklearn.neighbors import KNeighborsClassifier
 from torchvision import transforms
 from PIL import Image
 
@@ -26,8 +23,8 @@ def load_image(infilename):
 
 
 def load_class_names(filename):
-  with open(filename) as f:
-    return f.read().splitlines()
+    with open(filename) as f:
+        return f.read().splitlines()
 
 
 def show_predict(pred):
@@ -50,7 +47,7 @@ def show_predict(pred):
         print(f"\tLabel: {predict['label']} "
               f"Image index: {predict['index']}",
               f"Distance: {predict['distance']:.4f}"
-        )
+              )
 
 
 def create_response(label, class_names, knn_model, indices, distances):
@@ -73,7 +70,7 @@ def create_response(label, class_names, knn_model, indices, distances):
             "distance": float(dist)
         })
 
-    return response   
+    return response
 
 
 def get_predict(img_name, feature_extractor, classifier, class_names, topn):
@@ -91,8 +88,9 @@ def get_predict(img_name, feature_extractor, classifier, class_names, topn):
     classes_name = load_class_names(class_names)
     y_pred = knn.predict(embedding)
     distances, indices = knn.kneighbors(embedding[[0]], n_neighbors=topn)
-    return create_response(y_pred[0], classes_name, knn, indices[0], distances[0])
-    
+    return create_response(y_pred[0], classes_name,
+                           knn, indices[0], distances[0])
+
 
 def main():
     config = load_config('config/script_parameters.yaml')

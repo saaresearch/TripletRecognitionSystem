@@ -8,14 +8,16 @@ from torch.utils.data import DataLoader
 from torchvision import transforms
 from triplettorch import AllTripletMiner
 from triplettorch import TripletDataset
+
 from pdd.train_test_split import datadir_train_test_split
 from pdd.data_utils import AllCropsDataset
 from pdd.model import PDDModel
 from pdd.trainer import TripletTrainer
 from pdd.data_utils import unzip_data
 from pdd.data_utils import load_config
+from pdd.model import get_device
 
-DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+DEVICE = get_device()
 
 
 def fix_random_seed(seed, cudnn_determenistic=False):
@@ -35,8 +37,6 @@ def prepare_datasets(data_path):
             transforms.RandomHorizontalFlip(),
             transforms.RandomVerticalFlip(),
             transforms.ToTensor(),
-            # transforms.Normalize([0.4352, 0.5103, 0.2836], [0.2193, 0.2073,
-            # 0.2047])]),
             transforms.Normalize([0.485, 0.456, 0.406],
                                  [0.229, 0.224, 0.225])]),
         target_transform=torch.tensor)
@@ -134,35 +134,35 @@ def main():
 
     print("Build computational graph")
     model = PDDModel(1280, len(train_ds.classes), True)
-    # loss = torch.nn.NLLLoss()
     model = model.to(DEVICE)
     optimizer = torch.optim.Adam(
         model.parameters(),
-        lr=0.0001,
-        weight_decay=1e-5)
+        lr=config['lr'],
+        weight_decay=config['weight_decay'])
     scheduler = torch.optim.lr_scheduler.StepLR(
-        optimizer, step_size=7, gamma=0.1)
+        optimizer, step_size=config['step_size'], gamma=config['gamma'])
     print("Train model")
     fix_random_seed(config['random_seed'], config['cudnn_deterministic'])
     loss_history = []
-    trainer = TripletTrainer(model=model,
-                             optimizer=optimizer,
-                             train_triplet_loader=tri_train_load,
-                             epochs=config['epochs'],
-                             test_triplet_loader=tri_test_load,
-                             batch_size=config['batch_size'],
-                             knn_train_loader=train_loader,
-                             knn_test_loader=test_loader,
-                             scheduler=scheduler,
-                             plot_classes_name=test_ds.classes,
-                             num_classes=config['num_classes'],
-                             miner=miner,
-                             loss_history=loss_history,
-                             safe_plot_img_path=config['plot_embeddings_img'],
-                             model_save_path=config['model_save_path'],
-                             optim_save_path=config['optim_save_path'],
-                             knn_metric=config['knn_metric']
-                             )
+    trainer = TripletTrainer(
+        model=model,
+        optimizer=optimizer,
+        train_triplet_loader=tri_train_load,
+        epochs=config['epochs'],
+        test_triplet_loader=tri_test_load,
+        batch_size=config['batch_size'],
+        knn_train_loader=train_loader,
+        knn_test_loader=test_loader,
+        scheduler=scheduler,
+        plot_classes_name=test_ds.classes,
+        num_classes=config['num_classes'],
+        miner=miner,
+        loss_history=loss_history,
+        safe_plot_img_path=config['plot_embeddings_img'],
+        model_save_path=config['model_save_path'],
+        optim_save_path=config['optim_save_path'],
+        knn_metric=config['knn_metric']
+    )
 
     trainer.train()
 
