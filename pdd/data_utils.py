@@ -1,8 +1,5 @@
-import numpy as np
 import os
-
 from torch.utils.data import Dataset
-from torch.utils.data import Sampler
 from torchvision.datasets import ImageFolder
 from yaml import load
 from yaml import FullLoader
@@ -10,7 +7,7 @@ from json import dump
 
 
 def unzip_data(data_zip_path, data_path):
-        os.system("unzip %s -d %s" % (data_zip_path, data_path))
+    os.system("unzip %s -d %s" % (data_zip_path, data_path))
 
 
 def load_config(config_file):
@@ -84,5 +81,3 @@ class AllCropsDataset(Dataset):
             target = self.target_transform(target)
 
         return img, target
-
-    
