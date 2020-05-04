@@ -40,4 +40,6 @@ point_colors: ['#00ffff', '#000000', '#0000ff', '#ff00ff',
           '#c0c0c0', '#008080', '#ffff00']
 
 knn_metric: 'cosine'
+
+lr: 0.001
          

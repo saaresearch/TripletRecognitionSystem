@@ -1,5 +1,8 @@
 import torch
 import torch.nn as nn
+from torchbearer import Trial
+from torch.optim import Adam
+from torchbearer.callbacks import Best
 from pdd.model import PDDModel
 from pdd.data_utils import unzip_data
 from pdd.data_utils import load_config
@@ -8,15 +11,11 @@ from train import prepare_datasets
 from train import fix_random_seed
 from train import split_on_train_and_test
 from pdd.model import Perceptron_classifier
-from torchbearer import Trial
-from torch.optim import Adam
 from pdd.trainer import forward_inputs_into_model
-from torchbearer.callbacks import Best
 
 
 def train_classifier(model, optimizer, criterion, metrics,
-                     train_em, train_labels, test_em, test_labels):
-    # optimizer = Adam(model.parameters())
+                     train_features, train_labels, test_em, test_labels):
     checkpoint = Best(
         'classifier.pt',
         monitor='val_acc',
@@ -27,12 +26,16 @@ def train_classifier(model, optimizer, criterion, metrics,
         callbacks=[checkpoint],
         optimizer=optimizer,
         criterion=criterion,
-        metrics=['acc'])
+        metrics=['acc']
+    )
     trial.with_train_data(
-        torch.Tensor(train_em),
-        torch.Tensor(train_labels).long()).with_val_data(
+        torch.Tensor(train_features),
+        torch.Tensor(train_labels).long())\
+        .with_val_data(
         torch.Tensor(test_em),
-        torch.Tensor(test_labels).long()).for_steps(100).run(40)
+        torch.Tensor(test_labels).long())\
+        .for_steps(100)\
+        .run(40)
 
 
 def main():
@@ -60,19 +63,19 @@ def main():
         shuffle=True,
         num_workers=2)
 
-    modelpdd = PDDModel(1280, config['num_classes'], True)
-    modelclassifier = Perceptron_classifier(1280, config['num_classes'])
-    modelpdd = get_trained_model(
-        modelpdd, config_script['feature_extractor'], device)
-    test_em, test_labels = forward_inputs_into_model(test_loader, modelpdd,
+    model_pdd = PDDModel(1280, config['num_classes'], True)
+    model_clf = Perceptron_classifier(1280, config['num_classes'])
+    model_pdd = get_trained_model(
+        model_pdd, config_script['feature_extractor'], device)
+    test_em, test_labels = forward_inputs_into_model(test_loader, model_pdd,
                                                      device, config['batch_size'])
-    train_em, train_labels = forward_inputs_into_model(train_loader, modelpdd,
+    train_em, train_labels = forward_inputs_into_model(train_loader, model_pdd,
                                                       device, config['batch_size'])
 
-    optimizer = Adam(modelclassifier.parameters(), lr=0.001)
+    optimizer = Adam(model_clf.parameters(), lr=config['lr'])
     criterion = nn.CrossEntropyLoss()
     train_classifier(
-        modelclassifier,
+        model_clf,
         optimizer,
         criterion,
         ['acc'],
