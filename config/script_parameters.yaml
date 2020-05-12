@@ -3,7 +3,7 @@
 img_path: script_test/gnil/gnil.jpg
 
 # Path to feature extractor model 
-feature_extractor: triplet.pt
+feature_extractor: triplet_model_param.pt
 
 # Path to classifier model 
 classifier: knn_model.sav
