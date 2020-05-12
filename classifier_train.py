@@ -43,11 +43,11 @@ def main():
     config = load_config('config/train_parameters.yaml')
     config_script = load_config('config/script_parameters.yaml')
     fix_random_seed(config['random_seed'], config['cudnn_deterministic'])
+    unzip_data(config['data_zip_path'], config['data_save_path'])
     split_on_train_and_test(
         config['random_seed'],
         config['data_save_path'],
         config['test_size'])
-    unzip_data(config['data_zip_path'], config['data_save_path'])
     train_ds, test_ds = prepare_datasets(config['data_save_path'])
 
     train_loader = torch.utils.data.DataLoader(
