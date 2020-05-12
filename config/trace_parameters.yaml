@@ -7,4 +7,4 @@ classifier_model: classifier.pt
 # Path to save model parameters 
 save_model: trace_pddmodel.pt
 
-num_classes: 15
+num_classes: 20
