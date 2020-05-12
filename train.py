@@ -16,6 +16,7 @@ from pdd.trainer import TripletTrainer
 from pdd.data_utils import unzip_data
 from pdd.data_utils import load_config
 from pdd.model import get_device
+from pdd.data_utils import get_classname_file
 
 DEVICE = get_device()
 
@@ -88,6 +89,7 @@ def main():
 
     print("Create datasets")
     train_ds, test_ds = prepare_datasets(config['data_save_path'])
+    get_classname_file(train_ds.classes)
 
     print("Create data loaders")
     def train_set_d(index): return train_ds[index][0].float().numpy()

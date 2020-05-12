@@ -15,6 +15,13 @@ def load_config(config_file):
         return load(f, Loader=FullLoader)
 
 
+def get_classname_file(classes_name):
+    f = open('classes2.txt', 'w')
+    s1 = '\n'.join(classes_name)
+    f.write(s1)
+    f.close()
+
+
 def write_json_file(filename, data, indent=2):
     with open(filename, "w") as write_file:
         dump(data, write_file, indent=indent)
