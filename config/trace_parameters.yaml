@@ -1,5 +1,5 @@
 # Path to embedding model parameters 
-embedding_model: triplet.pt
+embedding_model: triplet_model_param.pt
 
 # Path to classifier model parameters 
 classifier_model: classifier.pt
