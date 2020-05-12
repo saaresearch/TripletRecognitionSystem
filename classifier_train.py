@@ -67,6 +67,7 @@ def main():
     model_clf = MLP(1280, config['num_classes'])
     model_pdd = get_trained_model(
         model_pdd, config_script['feature_extractor'], device)
+    model_pdd.to(device)
     test_em, test_labels = forward_inputs_into_model(test_loader, model_pdd,
                                                      device, config['batch_size'])
     train_em, train_labels = forward_inputs_into_model(train_loader, model_pdd,
