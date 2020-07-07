@@ -89,8 +89,6 @@ def main():
 
     print("Create datasets")
     train_ds, test_ds = prepare_datasets(config['data_save_path'])
-    get_classname_file(train_ds.classes)
-
     print("Create data loaders")
     def train_set_d(index): return train_ds[index][0].float().numpy()
     def test_set_d(index): return test_ds[index][0].float().numpy()
@@ -165,8 +163,9 @@ def main():
         optim_save_path=config['optim_save_path'],
         knn_metric=config['knn_metric']
     )
-
+    get_classname_file(train_ds.classes)
     trainer.train()
+    
 
 
 if __name__ == "__main__":
