@@ -1,5 +1,5 @@
 
-random_seed: 13
+random_seed: 7
 
 cudnn_deterministic: True 
 
