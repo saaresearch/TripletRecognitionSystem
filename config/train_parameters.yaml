@@ -22,7 +22,7 @@ n_sample: 3
 batch_size: 12
 
 # Count of epochs:
-epochs: 100
+epochs: 30
 
 # Path to save the plot with embeddings
 plot_embeddings_img: './PDD.png'
