@@ -17,9 +17,9 @@ test_size: 0.2
 
 # Number of sample per draw ( to increase probability to
 #               contain valid triplets in a batch )
-n_sample: 5
+n_sample: 3
 
-batch_size: 16
+batch_size: 12
 
 # Count of epochs:
 epochs: 30
