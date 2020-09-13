@@ -17,7 +17,7 @@ def main():
 
     embedding_model = PDDModel(1280, 25, True)
     embedding_model = get_trained_model(
-        embedding_model, 'static_quant.pt', 'cpu')
+        embedding_model, 'triplet_model_param.pt', 'cpu')
     embedding_model.eval()
 
     embedding_model.fuse_model()
