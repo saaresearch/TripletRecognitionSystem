@@ -12,7 +12,7 @@ from triplettorch import TripletDataset
 from pdd.train_test_split import datadir_train_test_split
 from pdd.data_utils import AllCropsDataset
 from pdd.quant_model import PDDModel
-from pdd.trainer import TripletTrainer
+from pdd.quant_trainer import TripletTrainer
 from pdd.data_utils import unzip_data
 from pdd.data_utils import load_config
 from pdd.data_utils import get_classname_file
