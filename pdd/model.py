@@ -37,7 +37,7 @@ class PDDModel(nn.Module):
 
         self.model = mobilenet_v2(pretrained)
         self.embedding_size = embedding_size
-        self.model.fc = nn.Linear(1280 * 8 * 8, self.embedding_size)
+        self.model.fc = nn.Linear(1280 * 1 * 1, self.embedding_size)
         self.model.classifier = nn.Linear(self.embedding_size, num_classes)
 
     def l2_norm(self, input):
@@ -51,7 +51,7 @@ class PDDModel(nn.Module):
 
     def forward(self, x):
         x = self.model.features(x)
-        x = x.view(x.size(0), -1)
+        x = F.adaptive_avg_pool2d(x, 1).reshape(x.shape[0], -1)
         x = self.model.fc(x)
         self.features = self.l2_norm(x)
         alpha = 10
@@ -72,3 +72,5 @@ def get_trained_model(model, feature_extractor, device):
             map_location=device))
     model.eval()
     return model
+
+
