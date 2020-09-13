@@ -1,6 +1,5 @@
 import torch.quantization
 import torch.nn as nn
-from collections import OrderedDict
 import torch
 import os
 import torch.nn.functional as F
@@ -10,6 +9,7 @@ from pdd.model import PDDModel
 from pdd.data_utils import load_config
 from pdd.model import get_trained_model
 from pdd.model import get_device
+from collections import OrderedDict
 
  
 def main():

@@ -42,7 +42,7 @@ point_colors: ['#00ffff', '#000000', '#0000ff', '#ff00ff',
 knn_metric: 'cosine'
 
 #optimazer params
-lr: 0.001
+lr: 0.0001
 
 weight_decay: 0.00005
 
