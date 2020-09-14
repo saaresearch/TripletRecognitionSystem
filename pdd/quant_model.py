@@ -194,6 +194,10 @@ class PDDModel(nn.Module):
         self.embedding_size = embedding_size
         self.model.fc = nn.Linear(1280 * 1 * 1, self.embedding_size)
         self.model.classifier = nn.Linear(self.embedding_size, num_classes)
+        # self.features = self.model.features
+        self.quant = QuantStub()
+        self.dequant = DeQuantStub()
+        self.features = torch.tensor(embedding_size)
 
     def l2_norm(self, input):
         input_size = input.size()
@@ -204,12 +208,17 @@ class PDDModel(nn.Module):
         output = _output.view(input_size)
         return output
 
+   
     def forward(self, x):
+        x = self.quant(x)
         x = self.model.features(x)
         x = F.adaptive_avg_pool2d(x, 1).reshape(x.shape[0], -1)
         x = self.model.fc(x)
-        self.features = self.l2_norm(x)
+        x = self.dequant(x)
+        
         alpha = 10
+
+        self.features = self.l2_norm(x)
         self.features = self.features * alpha
 
         return self.features
