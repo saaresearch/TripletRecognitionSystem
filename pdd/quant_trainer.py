@@ -103,8 +103,8 @@ class TripletTrainer(object):
                 self.safe_plot_img_path)
             self.train_phase()
             self.validating_phase()
-            if e % 5 == 0 and e > 0:
-                save_model(
+            
+            save_model(
                     self.model,
                     self.optimizer,
                     self.model_save_path,
