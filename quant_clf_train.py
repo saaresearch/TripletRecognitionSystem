@@ -66,7 +66,7 @@ def main():
 
     model = PDDModel(1280, len(train_ds.classes), True)
     print(len(train_ds.classes))
-    model = get_trained_model(model, 'triplet_model_param_1.pt', 'cpu')
+    model = get_trained_model(model, 'triplet_model_param.pt', 'cpu')
     model.to('cpu')
     model.eval()
     model.fuse_model()
