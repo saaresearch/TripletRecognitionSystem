@@ -17,6 +17,7 @@ def show_predict(predictions, topn, class_names):
     print(f'TOP {topn} Network prediction:\n')
     for top, pred in enumerate(predictions[:topn]):
         print(f'\t{top+1} {class_name[pred]}')
+        
 
 
 def get_topn_pred(img):
@@ -28,6 +29,8 @@ def get_topn_pred(img):
                        config['class_names'],
                        device)
     show_predict(pred, config['topn'], config['class_names'])
+
+    
 
 
 if __name__ == '__main__':

@@ -7,7 +7,7 @@ import torch.nn.functional as F
 class MLP(nn.Module):
     def __init__(self, emmbeding_size, num_classes):
         super().__init__()
-        self.fc1 = nn.Linear(1280, 512)
+        self.fc1 = nn.Linear(emmbeding_size, 512)
         self.fc2 = nn.Linear(512, 84)
         self.fc3 = nn.Linear(84, num_classes)
 
@@ -37,7 +37,7 @@ class PDDModel(nn.Module):
 
         self.model = mobilenet_v2(pretrained)
         self.embedding_size = embedding_size
-        self.model.fc = nn.Linear(1280 * 1 * 1, self.embedding_size)
+        self.model.fc = nn.Linear(embedding_size * 1 * 1, self.embedding_size)
         self.model.classifier = nn.Linear(self.embedding_size, num_classes)
 
     def l2_norm(self, input):

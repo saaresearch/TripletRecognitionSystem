@@ -1,0 +1,20 @@
+Corn__Downy mildew
+Corn__Eyespot
+Corn__Healthy
+Corn__Northern leaf blight
+Corn__Southern rust
+Cotton__Alternaria leaf blight
+Cotton__Healthy
+Cotton__Nutrient deficiency
+Cotton__Powdery mildew
+Cotton__Verticillium wilt
+Grape__Black rot
+Grape__Chlorosis
+Grape__Esca
+Grape__Healthy
+Grape__Powdery mildew
+Wheat__Black chaff
+Wheat__Brown rust
+Wheat__Healthy
+Wheat__Powdery mildew
+Wheat__Yellow rust

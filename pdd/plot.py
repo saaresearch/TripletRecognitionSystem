@@ -9,6 +9,6 @@ def plot(embeddings, labels, class_names, name, save_img_path):
         plt.scatter(embeddings[inds, 0], embeddings[inds, 1])
     plt.legend(class_names, loc='center left', bbox_to_anchor=(1, 0.5))
     plt.title(name)
-    plt.show()
+    # plt.show()
     fig.canvas.draw()
     fig.savefig(save_img_path)

@@ -40,15 +40,15 @@ def train_classifier(model, optimizer, criterion, metrics,
 
 
 def main():
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    device =  'cpu'
     config = load_config('config/train_parameters.yaml')
     config_script = load_config('config/script_parameters.yaml')
     fix_random_seed(config['random_seed'], config['cudnn_deterministic'])
     unzip_data(config['data_zip_path'], config['data_save_path'])
-    split_on_train_and_test(
-        config['random_seed'],
-        config['data_save_path'],
-        config['test_size'])
+    # split_on_train_and_test(
+    #     config['random_seed'],
+    #     config['data_save_path'],
+    #     config['test_size'])
     train_ds, test_ds = prepare_datasets(config['data_save_path'])
 
     train_loader = torch.utils.data.DataLoader(
@@ -56,13 +56,13 @@ def main():
         pin_memory=True,
         batch_size=config['batch_size'],
         shuffle=True,
-        num_workers=2)
+        num_workers=0)
     test_loader = torch.utils.data.DataLoader(
         test_ds,
         pin_memory=True,
         batch_size=config['batch_size'],
         shuffle=True,
-        num_workers=2)
+        num_workers=0)
 
     model = PDDModel(1280, len(train_ds.classes), True)
     print(len(train_ds.classes))

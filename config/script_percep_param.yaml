@@ -1,11 +1,11 @@
 # Path to model 
-model: trace_pddmodel.pt
+model: qmodel.pt
 
 # How many of the nearest points are required for the extraction
 topn: 5
 
 # Path to file with class names
-class_names: classname2.txt
+class_names: classes2.txt
 
 #Path to save prediction 
 prediction_savefile: data_file.json # or False if not save

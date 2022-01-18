@@ -44,7 +44,7 @@ class TripletTrainer(object):
                  optim_save_path,
                  knn_metric
                  ):
-        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.device = 'cpu'
         self.model = model.to(self.device)
         self.optimizer = optimizer
         # self.loss = loss

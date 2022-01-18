@@ -6,8 +6,8 @@ import random
 
 from torch.utils.data import DataLoader
 from torchvision import transforms
-from triplettorch import AllTripletMiner
-from triplettorch import TripletDataset
+from pdd.triplettorch import AllTripletMiner
+from pdd.triplettorch import TripletDataset
 
 from pdd.train_test_split import datadir_train_test_split
 from pdd.data_utils import AllCropsDataset
@@ -30,13 +30,13 @@ def main():
     fix_random_seed(config['random_seed'], config['cudnn_deterministic'])
 
     print("Extract data")
-    unzip_data(config['data_zip_path'], config['data_save_path'])
+    # unzip_data(config['data_zip_path'], config['data_save_path'])
 
     print("Split on train and test")
-    split_on_train_and_test(
-        config['random_seed'],
-        config['data_save_path'],
-        config['test_size'])
+    # split_on_train_and_test(
+    #     config['random_seed'],
+    #     config['data_save_path'],
+    #     config['test_size'])
 
     print("Create datasets")
     train_ds, test_ds = prepare_datasets(config['data_save_path'])
@@ -58,13 +58,13 @@ def main():
     tri_train_load = DataLoader(tri_train_set,
                                 batch_size=config['batch_size'],
                                 shuffle=True,
-                                num_workers=2,
+                                num_workers=0,
                                 pin_memory=True
                                 )
     tri_test_load = DataLoader(tri_test_set,
                                batch_size=config['batch_size'],
                                shuffle=False,
-                               num_workers=2,
+                               num_workers=0,
                                pin_memory=True
                                )
 
@@ -73,13 +73,13 @@ def main():
         pin_memory=True,
         batch_size=config['batch_size'],
         shuffle=True,
-        num_workers=2)
+        num_workers=0)
     test_loader = torch.utils.data.DataLoader(
         test_ds,
         pin_memory=True,
         batch_size=config['batch_size'],
         shuffle=True,
-        num_workers=2)
+        num_workers=0)
     print("Create miner")
     miner = AllTripletMiner(.5)
 

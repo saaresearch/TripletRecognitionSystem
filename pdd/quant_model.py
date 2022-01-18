@@ -192,7 +192,7 @@ class PDDModel(nn.Module):
         # model = m
         self.model = mobilenet_v2(pretrained)
         self.embedding_size = embedding_size
-        self.model.fc = nn.Linear(1280 * 1 * 1, self.embedding_size)
+        self.model.fc = nn.Linear(embedding_size * 1 * 1, self.embedding_size)
         self.model.classifier = nn.Linear(self.embedding_size, num_classes)
         # self.features = self.model.features
         self.quant = QuantStub()
