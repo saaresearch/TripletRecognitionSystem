@@ -1,3 +1,4 @@
+from pyexpat import model
 import torch
 import torch.nn as nn
 from torchbearer import Trial
@@ -12,6 +13,9 @@ from train import fix_random_seed
 from train import split_on_train_and_test
 from pdd.model import MLP
 from pdd.trainer import forward_inputs_into_model
+from collections import OrderedDict
+from torch.utils.mobile_optimizer import optimize_for_mobile
+
 
 
 def train_classifier(model, optimizer, criterion, metrics,
@@ -39,15 +43,15 @@ def train_classifier(model, optimizer, criterion, metrics,
 
 
 def main():
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    device = 'cpu'
     config = load_config('config/train_parameters.yaml')
     config_script = load_config('config/script_parameters.yaml')
     fix_random_seed(config['random_seed'], config['cudnn_deterministic'])
-    unzip_data(config['data_zip_path'], config['data_save_path'])
-    split_on_train_and_test(
-        config['random_seed'],
-        config['data_save_path'],
-        config['test_size'])
+    # unzip_data(config['data_zip_path'], config['data_save_path'])
+    # split_on_train_and_test(
+    #     config['random_seed'],
+    #     config['data_save_path'],
+    #     config['test_size'])
     train_ds, test_ds = prepare_datasets(config['data_save_path'])
 
     train_loader = torch.utils.data.DataLoader(
@@ -63,28 +67,36 @@ def main():
         shuffle=True,
         num_workers=2)
 
-    model_pdd = PDDModel(1280, config['num_classes'], True)
+    embedding_model = PDDModel(1280, config['num_classes'], True)
     model_clf = MLP(1280, config['num_classes'])
-    model_pdd = get_trained_model(
-        model_pdd, config_script['feature_extractor'], device)
-    model_pdd.to(device)
-    test_em, test_labels = forward_inputs_into_model(test_loader, model_pdd,
+    embedding_model = get_trained_model(
+        embedding_model, config_script['feature_extractor'], device)
+    embedding_model.to(device)
+    model_clf.to(device)
+    test_em, test_labels = forward_inputs_into_model(test_loader, embedding_model,
                                                      device, config['batch_size'])
-    train_em, train_labels = forward_inputs_into_model(train_loader, model_pdd,
+    train_em, train_labels = forward_inputs_into_model(train_loader, embedding_model,
                                                       device, config['batch_size'])
 
     optimizer = Adam(model_clf.parameters(), lr=config['lr'])
     criterion = nn.CrossEntropyLoss()
-    train_classifier(
-        model_clf,
-        optimizer,
-        criterion,
-        ['acc'],
-        train_em,
-        train_labels,
-        test_em,
-        test_labels)
-
+    # train_classifier(
+    #     model_clf,
+    #     optimizer,
+    #     criterion,
+    #     ['acc'],
+    #     train_em,
+    #     train_labels,
+    #     test_em,
+    #     test_labels)
+    full_model = nn.Sequential(OrderedDict([
+        ('embedding', embedding_model),
+        ('classifier', get_trained_model(model_clf,
+                                         'classifier.pt', device))]))
+    full_model = torch.jit.trace(full_model, torch.rand(1, 3, 256, 256))                                   
+    traced_script_module = optimize_for_mobile(full_model)
+    torch.jit.save(traced_script_module,'model.pt')
+    traced_script_module._save_for_lite_interpreter("Mobilemodel.pt")
 
 if __name__ == "__main__":
 

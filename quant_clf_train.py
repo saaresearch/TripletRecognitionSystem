@@ -13,6 +13,7 @@ from train import split_on_train_and_test
 from pdd.model import MLP
 from pdd.trainer import forward_inputs_into_model
 from collections import OrderedDict
+from torch.utils.mobile_optimizer import optimize_for_mobile
 
 
 def train_classifier(model, optimizer, criterion, metrics,
@@ -102,12 +103,17 @@ def main():
         train_labels,
         test_em,
         test_labels)
-    qmodel = nn.Sequential(OrderedDict([
+    full_model = nn.Sequential(OrderedDict([
         ('embedding', embedding_model),
         ('classifier', get_trained_model(model_clf,
                                          'classifier.pt', 'cpu'))]))
-    qmodel = torch.jit.trace(qmodel, torch.rand(1, 3, 256, 256))
+    qmodel = torch.jit.trace(full_model, torch.rand(1, 3, 256, 256))
+    traced_script_module = optimize_for_mobile(qmodel)
+    torch.jit.save(traced_script_module,'model.pt')
     qmodel.save("qmodel.pt")
+
+    # torchscript_model = torch.jit.script(full_model)
+    # torchscript
 
 
 if __name__ == "__main__":
