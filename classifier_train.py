@@ -80,15 +80,15 @@ def main():
 
     optimizer = Adam(model_clf.parameters(), lr=config['lr'])
     criterion = nn.CrossEntropyLoss()
-    # train_classifier(
-    #     model_clf,
-    #     optimizer,
-    #     criterion,
-    #     ['acc'],
-    #     train_em,
-    #     train_labels,
-    #     test_em,
-    #     test_labels)
+    train_classifier(
+        model_clf,
+        optimizer,
+        criterion,
+        ['acc'],
+        train_em,
+        train_labels,
+        test_em,
+        test_labels)
     full_model = nn.Sequential(OrderedDict([
         ('embedding', embedding_model),
         ('classifier', get_trained_model(model_clf,
