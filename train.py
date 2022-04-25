@@ -34,7 +34,7 @@ def prepare_datasets(data_path):
         data_path,
         subset='train',
         transform=transforms.Compose([
-            transforms.Resize((256,256)),
+            transforms.Resize((256, 256)),
             transforms.RandomHorizontalFlip(),
             transforms.RandomVerticalFlip(),
             transforms.ToTensor(),
@@ -46,7 +46,7 @@ def prepare_datasets(data_path):
         data_path,
         subset='test',
         transform=transforms.Compose([
-            transforms.Resize((256,256)),
+            transforms.Resize((256, 256)),
             transforms.ToTensor(),
             transforms.Normalize([0.485, 0.456, 0.406],
                                  [0.229, 0.224, 0.225])]),
@@ -165,9 +165,7 @@ def main():
     )
     get_classname_file(train_ds.classes)
     trainer.train()
-    
 
 
 if __name__ == "__main__":
-
     main()
