@@ -1,7 +1,8 @@
 import numpy as np
 import shutil
 import os
-
+import torch
+from torchvision import transforms
 from glob import glob
 from tqdm import tqdm
 
@@ -81,3 +82,10 @@ def datadir_train_test_split(origin_path, test_size, random_state=0):
         raise
 
     return (train_path, test_path)
+
+def split_on_train_and_test(random_seed, data_path, test_size):
+    for crop in os.listdir(data_path):
+        crop_path = os.path.join(data_path, crop)
+        _ = datadir_train_test_split(crop_path,
+                                     test_size=test_size,
+                                     random_state=random_seed)

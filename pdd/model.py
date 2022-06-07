@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from torchvision.models import mobilenet_v2
+from torchvision.models import mobilenet_v2, convnext_tiny
 import torch.nn.functional as F
 
 
@@ -32,11 +32,15 @@ class PDDModel(nn.Module):
     """ 
     This model based on architecture MobileNetV2
     """
-    def __init__(self, embedding_size, num_classes, pretrained=False):
+    def __init__(self, embedding_size, num_classes, pretrained=False, transfer_model='convnet'):
         super(PDDModel, self).__init__()
+        if 'mobilenet':
+            self.model = mobilenet_v2(pretrained)
+            self.embedding_size = embedding_size
+        if 'convnext':
+            self.model = convnext_tiny(pretrained=True)
+            self.embedding_size = 768
 
-        self.model = mobilenet_v2(pretrained)
-        self.embedding_size = embedding_size
         self.model.fc = nn.Linear(embedding_size * 1 * 1, self.embedding_size)
         self.model.classifier = nn.Linear(self.embedding_size, num_classes)
 

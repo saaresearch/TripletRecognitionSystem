@@ -1,7 +1,11 @@
-# PDD: Plant Disease Detection 
+# TripletNet recognition system
 
-## Local setup
+<details open>
+<summary>Install</summary>
 
+```console
+git clone 
+```
 1. Install Python **>=3.6.5 and <3.7**
 2. Create virtual environment:
 
@@ -18,8 +22,13 @@ python -m venv .env
 ```console
 pip install -r requirements.txt -f https://download.pytorch.org/whl/torch_stable.html
 ```
+</details>
 
-## Inference
+## Dataset
 
-1. Change paths in the ***config/script_parameters.yaml***
-2. Run `python script.py` in the root directory
+Instruction for dataset loading see in  <a href="https://colab.research.google.com/github/ultralytics/yolov5/blob/master/tutorial.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+
+
+
+
+

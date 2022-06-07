@@ -1,20 +1,28 @@
-Corn__Downy mildew
-Corn__Eyespot
-Corn__Healthy
-Corn__Northern leaf blight
-Corn__Southern rust
-Cotton__Alternaria leaf blight
-Cotton__Healthy
-Cotton__Nutrient deficiency
-Cotton__Powdery mildew
-Cotton__Verticillium wilt
-Grape__Black rot
-Grape__Chlorosis
-Grape__Esca
-Grape__Healthy
-Grape__Powdery mildew
-Wheat__Black chaff
-Wheat__Brown rust
-Wheat__Healthy
-Wheat__Powdery mildew
-Wheat__Yellow rust
+bottle__bottle-blue
+bottle__bottle-blue-full
+bottle__bottle-blue5l
+bottle__bottle-blue5l-full
+bottle__bottle-dark
+bottle__bottle-dark-full
+bottle__bottle-green
+bottle__bottle-green-full
+bottle__bottle-milk
+bottle__bottle-milk-full
+bottle__bottle-multicolor
+bottle__bottle-multicolorv-full
+bottle__bottle-oil
+bottle__bottle-oil-full
+bottle__bottle-transp
+bottle__bottle-transp-full
+bottle__bottle-yogurt
+bottle__glass-dark
+bottle__glass-green
+bottle__glass-transp
+canister__canister
+cans__cans
+cardboard__juice-cardboard
+cardboard__milk-cardboard
+detergent__detergent-box
+detergent__detergent-color
+detergent__detergent-transparent
+detergent__detergent-white

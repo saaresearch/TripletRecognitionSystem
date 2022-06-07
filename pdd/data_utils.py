@@ -1,10 +1,25 @@
 import os
+import torch
 from torch.utils.data import Dataset
 from torchvision.datasets import ImageFolder
+from torchvision import transforms
 from yaml import load
 from yaml import FullLoader
 from json import dump
 
+TRANSFORMS_TRAIN = transforms.Compose([
+            transforms.Resize((256, 256)),
+            transforms.RandomHorizontalFlip(),
+            transforms.RandomVerticalFlip(),
+            transforms.ToTensor(),
+            transforms.Normalize([0.485, 0.456, 0.406],
+                                 [0.229, 0.224, 0.225])])
+
+TRANSFROMS_TEST = transforms.Compose([
+            transforms.Resize((256, 256)),
+            transforms.ToTensor(),
+            transforms.Normalize([0.485, 0.456, 0.406],
+                                 [0.229, 0.224, 0.225])])
 
 def unzip_data(data_zip_path, data_path):
     os.system("unzip %s -d %s" % (data_zip_path, data_path))
@@ -88,3 +103,38 @@ class AllCropsDataset(Dataset):
             target = self.target_transform(target)
 
         return img, target
+
+def prepare_datasets(data_path):
+
+    train_ds = AllCropsDataset(
+        data_path,
+        subset='train',
+        transform=TRANSFORMS_TRAIN,
+        target_transform=torch.tensor)
+
+    test_ds = AllCropsDataset(
+        data_path,
+        subset='test',
+        transform=TRANSFROMS_TEST,
+        target_transform=torch.tensor)
+    print('Train size:', len(train_ds))
+    print('Test size:', len(test_ds))
+    print('Number of samples in the dataset:', len(train_ds))
+    print('Crops in the dataset:', train_ds.crops)
+    print('Total number of classes in the dataset:', len(train_ds.classes))
+    print('Classes with the corresponding targets:')
+    print(train_ds.class_to_idx)
+
+    return train_ds, test_ds
+
+def get_transform(train_path, test_path):
+    train_ds = ImageFolder(train_path, transform=TRANSFORMS_TRAIN)
+    test_ds = ImageFolder(test_path, transform=TRANSFROMS_TEST)
+    print('Train size:', len(train_ds))
+    print('Test size:', len(test_ds))
+    print('Number of samples in the dataset:', len(train_ds))
+    # print('Crops in the dataset:', train_ds.crops)
+    print('Total number of classes in the dataset:', len(train_ds.classes))
+    print('Classes with the corresponding targets:')
+    print(train_ds.class_to_idx)
+    return train_ds, test_ds

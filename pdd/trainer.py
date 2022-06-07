@@ -1,6 +1,6 @@
 import torch
 import numpy as np
-from tqdm import tqdm
+from tqdm import tqdm as tqdm
 
 from pdd.metrics import knn_acc
 from pdd.plot import plot
@@ -14,7 +14,7 @@ def forward_inputs_into_model(loader, model, device, batch_size):
     X = []
     y = []
     with torch.no_grad():
-        for batch_idx, (inputs, targets) in enumerate(loader):
+        for batch_idx, (inputs, targets) in (enumerate(tqdm(loader,position=0, leave=False))):
             inputs, targets = inputs.to(device), targets.to(device)
             outputs = model(inputs).detach().cpu().numpy()
             targets = targets.detach().cpu().numpy()
@@ -117,7 +117,7 @@ class TripletTrainer(object):
         train_frac_pos = 0.
 
         self.model.train()
-        with tqdm(self.train_triplet_loader, desc='Batch') as b_pbar:
+        with tqdm(self.train_triplet_loader, position=0, leave=False) as b_pbar:
             for b, batch in enumerate(b_pbar):
                 self.optimizer.zero_grad()
 
@@ -146,7 +146,7 @@ class TripletTrainer(object):
         val_loss = 0.
         val_frac_pos = 0.
         self.model.eval()
-        with tqdm(self.test_triplet_loader, desc='val') as b_pbar:
+        with tqdm(self.test_triplet_loader, desc='val', position=0, leave=False) as b_pbar:
             for b, batch in enumerate(b_pbar):
                 labels, data = batch
                 labels = torch.cat([label for label in labels], axis=0)

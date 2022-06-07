@@ -1,5 +1,5 @@
 # Path to model 
-model: qmodel.pt
+model: model.pt
 
 # How many of the nearest points are required for the extraction
 topn: 5

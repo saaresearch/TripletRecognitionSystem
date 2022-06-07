@@ -8,13 +8,14 @@ from pdd.model import PDDModel
 from pdd.data_utils import unzip_data
 from pdd.data_utils import load_config
 from pdd.model import get_trained_model
-from train import prepare_datasets
+from pdd.data_utils import prepare_datasets, get_transform
 from train import fix_random_seed
-from train import split_on_train_and_test
+from pdd.train_test_split import split_on_train_and_test
 from pdd.model import MLP
 from pdd.trainer import forward_inputs_into_model
 from collections import OrderedDict
 from torch.utils.mobile_optimizer import optimize_for_mobile
+import argparse
 
 
 
@@ -42,33 +43,36 @@ def train_classifier(model, optimizer, criterion, metrics,
         .run(40)
 
 
-def main():
+def main(opt):
     device = 'cpu'
     config = load_config('config/train_parameters.yaml')
     config_script = load_config('config/script_parameters.yaml')
     fix_random_seed(config['random_seed'], config['cudnn_deterministic'])
-    # unzip_data(config['data_zip_path'], config['data_save_path'])
-    # split_on_train_and_test(
-    #     config['random_seed'],
-    #     config['data_save_path'],
-    #     config['test_size'])
-    train_ds, test_ds = prepare_datasets(config['data_save_path'])
-
+    if opt.unzip:
+        unzip_data(config['data_zip_path'], config['data_save_path'])
+    if opt.split:
+        split_on_train_and_test(
+            config['random_seed'],
+            config['data_save_path'],
+            config['test_size'])
+        train_ds, test_ds = prepare_datasets(config['data_save_path'])
+    else:
+        train_ds, test_ds = get_transform(opt.datatrain, opt.datatest)
     train_loader = torch.utils.data.DataLoader(
         train_ds,
         pin_memory=True,
         batch_size=config['batch_size'],
         shuffle=True,
-        num_workers=2)
+        num_workers=0)
     test_loader = torch.utils.data.DataLoader(
         test_ds,
         pin_memory=True,
         batch_size=config['batch_size'],
         shuffle=True,
-        num_workers=2)
+        num_workers=0)
 
-    embedding_model = PDDModel(1280, config['num_classes'], True)
-    model_clf = MLP(1280, config['num_classes'])
+    embedding_model = PDDModel(768, config['num_classes'], True)
+    model_clf = MLP(768, config['num_classes'])
     embedding_model = get_trained_model(
         embedding_model, config_script['feature_extractor'], device)
     embedding_model.to(device)
@@ -99,5 +103,11 @@ def main():
     traced_script_module._save_for_lite_interpreter("Mobilemodel.pt")
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--split', default=False, action="store_true", help='spit dataset to train and test')
+    parser.add_argument('--unzip', default=False, action="store_true", help='unzip folder with dataset')
+    parser.add_argument('--datatrain', type=str, default='', help='train data path')
+    parser.add_argument('--datatest', type=str, default='', help='test data path')
+    opt = parser.parse_args()
 
-    main()
+    main(opt)
