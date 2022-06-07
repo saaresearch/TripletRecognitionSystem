@@ -24,9 +24,13 @@ pip install -r requirements.txt -f https://download.pytorch.org/whl/torch_stable
 ```
 </details>
 
-## Dataset
+## Description of the system
+![](doc/image/img.png)
 
-Instruction for dataset loading see in  <a href="https://colab.research.google.com/drive/1YhVJfTeCBbMov1Lo_V6XyzMnXP8rraPJ"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+## Custom Dataset and model training
+
+Instruction for dataset loading   and git demo chek in <a href="https://colab.research.google.com/drive/1YhVJfTeCBbMov1Lo_V6XyzMnXP8rraPJ"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+
 
 
 
