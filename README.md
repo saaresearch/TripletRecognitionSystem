@@ -47,8 +47,11 @@ The resulting model can be used for web and mobile applications:
 #### Telegram bot:
 
 
+<div align="center">
 
 ![img.png](doc/image/telegram.png)
+
+</div>
 <div align="center">
 <a href="https://t.me/PlantDiseaseRecognitionBOT">
    <img src="doc/image/img_2.png" width="15%"/>
