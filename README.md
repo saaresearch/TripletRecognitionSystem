@@ -50,16 +50,31 @@ The resulting model can be used for web and mobile applications:
 <div align="center">
 
 ![img.png](doc/image/telegram.png)
-
 </div>
 <div align="center">
 <a href="https://t.me/PlantDiseaseRecognitionBOT">
-   <img src="doc/image/img_2.png" width="15%"/>
+   <img src="doc/image/img_2.png" width="5%"/>
    </a>
 <a href="https://github.com/WEBSTERMASTER777/telegrambot">
-   <img src="doc/image/img_1.png" width="15%"/>
+   <img src="doc/image/img_1.png" width="5%"/>
    </a>
 </div>
+
+#### Android Application
+
+<div align="center">
+
+![img.png](doc/image/android.png)
+</div>
+<div align="center">
+<a href="https://drive.google.com/file/d/1xOYnELaa5x2cDNjoqUbgGbgXsb9DcaeJ/view?usp=sharing">
+   <img src="doc/image/img_3.png" width="5%"/>
+   </a>
+<a href="https://github.com/WEBSTERMASTER777/AndroidRecognitionApp">
+   <img src="doc/image/img_1.png" width="5%"/>
+   </a>
+</div>
+
 
 ## Custom Dataset and model training
 
