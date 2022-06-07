@@ -14,7 +14,7 @@ python -m venv .env
 ```
 
 3. Activate environment
-    - on windows: `.env\Scripts\activate`RT
+    - on windows: `.env\Scripts\activate`
     - on linux/mac: `source .env/bin/activate`
 
 4. Install dependencies:
@@ -25,7 +25,34 @@ pip install -r requirements.txt -f https://download.pytorch.org/whl/torch_stable
 </details>
 
 ## Description of the system
+Our system allows you to train machine learning models on small datasets, and also allows you to get a ready-made quantized model for use on mobile devices
+
 ![](doc/image/img.png)
+
+The project contains the following utilities:
+* Preprocessing (`pdd/data_utils.py`)
+* Utils for create dataloaders
+   * Split datasetutils (`pdd/train_test_split.py`)
+   * Prepare dataloaders utils(`train.py` and `pdd/data_utils.py` )
+* Utils for training :
+   * Training Triplet extactor model with KNN classifier (`train.py`, `pdd/trainer.py`, `pdd/model.py`, `pdd/tripletttorch.py`)
+   * Training MLP classifier for extractor model (`classifier_train.py`)
+* Utils for test model (`script.py`, `perceptron_script.py`,`confusion_matrix.py` )
+* Utils for quantization
+  * Static quantization available only for **MobileNetV2** model and training only on CPU (all files with prefix quant)
+  * Dynamic quantization (`dynamic_quantization.py`)
+
+### Usage example
+The resulting model can be used for web and mobile applications:
+#### Telegram bot:
+
+
+
+![img.png](doc/image/telegram.png)
+<a href="https://github.com/ultralytics">
+   <img src="doc/image/img_2.png" width="15%"/>
+   </a>
+
 
 ## Custom Dataset and model training
 
