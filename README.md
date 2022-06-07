@@ -49,10 +49,14 @@ The resulting model can be used for web and mobile applications:
 
 
 ![img.png](doc/image/telegram.png)
-<a href="https://github.com/ultralytics">
+<div align="center">
+<a href="https://t.me/PlantDiseaseRecognitionBOT">
    <img src="doc/image/img_2.png" width="15%"/>
    </a>
-
+<a href="https://github.com/WEBSTERMASTER777/telegrambot">
+   <img src="doc/image/img_1.png" width="15%"/>
+   </a>
+</div>
 
 ## Custom Dataset and model training
 
