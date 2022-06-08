@@ -32,12 +32,12 @@ class PDDModel(nn.Module):
     """ 
     This model based on architecture MobileNetV2
     """
-    def __init__(self, embedding_size, num_classes, pretrained=False, transfer_model='convnet'):
+    def __init__(self, embedding_size, num_classes, pretrained=False, transfer_model='convnext'):
         super(PDDModel, self).__init__()
-        if 'mobilenet':
+        if transfer_model == 'mobilenet':
             self.model = mobilenet_v2(pretrained)
             self.embedding_size = embedding_size
-        if 'convnext':
+        if transfer_model == 'convnext':
             self.model = convnext_tiny(pretrained=True)
             self.embedding_size = 768
 

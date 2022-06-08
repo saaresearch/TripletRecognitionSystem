@@ -100,7 +100,7 @@ def main(opt):
     miner = AllTripletMiner(.5).cuda()
 
     print("Build computational graph")
-    model = PDDModel(768, len(train_ds.classes), True)
+    model = PDDModel(1280, len(train_ds.classes), True, 'mobilenet')
     model = model.to(DEVICE)
     optimizer = torch.optim.Adam(
         model.parameters(),

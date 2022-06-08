@@ -10,3 +10,4 @@ class_names: classes2.txt
 #Path to save prediction 
 prediction_savefile: data_file.json # or False if not save
 
+

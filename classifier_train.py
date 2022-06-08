@@ -40,7 +40,7 @@ def train_classifier(model, optimizer, criterion, metrics,
         torch.Tensor(test_em),
         torch.Tensor(test_labels).long())\
         .for_steps(100)\
-        .run(40)
+        .run(100)
 
 
 def main(opt):
@@ -51,10 +51,10 @@ def main(opt):
     if opt.unzip:
         unzip_data(config['data_zip_path'], config['data_save_path'])
     if opt.split:
-        split_on_train_and_test(
-            config['random_seed'],
-            config['data_save_path'],
-            config['test_size'])
+        # split_on_train_and_test(
+        #     config['random_seed'],
+        #     config['data_save_path'],
+        #     config['test_size'])
         train_ds, test_ds = prepare_datasets(config['data_save_path'])
     else:
         train_ds, test_ds = get_transform(opt.datatrain, opt.datatest)
