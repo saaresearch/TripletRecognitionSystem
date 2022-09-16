@@ -1,5 +1,7 @@
 # TripletNet recognition system
 
+![img_2.png](img_2.png)
+
 <details open>
 <summary>Install</summary>
 
