@@ -1,7 +1,7 @@
 
 #  <p style="text-align: center;">TripletNet recognition system
 
-![img_2.png](img_2.png)
+![img_2.png](doc/image/logo.png)
 
 <details open>
 <summary> 🛠 Install 🛠</summary>
