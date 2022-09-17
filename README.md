@@ -1,9 +1,10 @@
-# TripletNet recognition system
+
+#  <p style="text-align: center;">TripletNet recognition system
 
 ![img_2.png](img_2.png)
 
 <details open>
-<summary>Install</summary>
+<summary> 🛠 Install 🛠</summary>
 
 ```console
 git clone 
@@ -50,10 +51,21 @@ The resulting model can be used for web and mobile applications:
 
 
 <div align="center">
-
-![img.png](doc/image/telegram.png)
 </div>
 <div align="center">
+<a href="https://t.me/PlantDiseaseRecognitionBOT">
+   <img src="doc/image/telegram.png"/>
+   </a>
+<a href="https://github.com/WEBSTERMASTER777/telegrambot">
+   <img src="doc/gif/telegramm.gif" width="26%" />
+   </a>
+</div>
+
+
+[//]: # (![img.png]&#40;doc/image/telegram.png&#41;)
+
+<div align="center">
+Link: 
 <a href="https://t.me/PlantDiseaseRecognitionBOT">
    <img src="doc/image/img_2.png" width="5%"/>
    </a>
@@ -64,11 +76,24 @@ The resulting model can be used for web and mobile applications:
 
 #### Android Application
 
-<div align="center">
+[//]: # (<div align="center">)
 
-![img.png](doc/image/android.png)
+[//]: # ()
+[//]: # ([//]: # &#40;![img.png]&#40;doc/image/android.png&#41;&#41;)
+[//]: # (</div>)
+
+<div align="center">
 </div>
 <div align="center">
+<a href="https://t.me/PlantDiseaseRecognitionBOT">
+   <img src="doc/image/android.png"/>
+   </a>
+<a href="https://github.com/WEBSTERMASTER777/telegrambot">
+   <img src="doc/gif/android.gif" width="25%" />
+   </a>
+</div>
+<div align="center">
+Link: 
 <a href="https://drive.google.com/file/d/1xOYnELaa5x2cDNjoqUbgGbgXsb9DcaeJ/view?usp=sharing">
    <img src="doc/image/img_3.png" width="5%"/>
    </a>

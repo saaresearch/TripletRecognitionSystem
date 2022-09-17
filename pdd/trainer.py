@@ -65,6 +65,7 @@ class TripletTrainer(object):
         self.knn_metric = knn_metric
 
     def train(self):
+        PREV_ACC = 0
         for e in tqdm(range(self.epochs), desc='Epoch'):
 
             test_em, test_labels = forward_inputs_into_model(self.knn_test_loader,
@@ -75,14 +76,14 @@ class TripletTrainer(object):
                                                                self.model,
                                                                self.device,
                                                                self.batch_size)
-            knn_acc(
+            acc = knn_acc(
                 test_em,
                 test_labels,
                 train_em,
                 train_labels,
                 COUNT_NEIGHBOR_EXP_1,
                 self.knn_metric),
-            knn_acc(
+            acc = knn_acc(
                 test_em,
                 test_labels,
                 train_em,
@@ -103,7 +104,9 @@ class TripletTrainer(object):
                 self.safe_plot_img_path)
             self.train_phase()
             self.validating_phase()
-            if e % 1 == 0 and e > 0:
+            if e % 1 == 0 and e > 0 and acc>PREV_ACC:
+                print(f'Best model acc: {acc}')
+                PREV_ACC = acc
                 save_model(
                     self.model,
                     self.optimizer,

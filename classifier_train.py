@@ -40,7 +40,7 @@ def train_classifier(model, optimizer, criterion, metrics,
         torch.Tensor(test_em),
         torch.Tensor(test_labels).long())\
         .for_steps(100)\
-        .run(100)
+        .run(40)
 
 
 def main(opt):
@@ -71,8 +71,8 @@ def main(opt):
         shuffle=True,
         num_workers=0)
 
-    embedding_model = PDDModel(768, config['num_classes'], True)
-    model_clf = MLP(768, config['num_classes'])
+    embedding_model = PDDModel(1280, config['num_classes'], True, 'mobilenet')
+    model_clf = MLP(1280, config['num_classes'])
     embedding_model = get_trained_model(
         embedding_model, config_script['feature_extractor'], device)
     embedding_model.to(device)
