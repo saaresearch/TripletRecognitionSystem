@@ -57,7 +57,7 @@ The resulting model can be used for web and mobile applications:
    <img src="doc/image/telegram.png"/>
    </a>
 <a href="https://github.com/WEBSTERMASTER777/telegrambot">
-   <img src="doc/gif/telegramm.gif" width="26%" />
+   <img src="doc/gif/telegramm.gif" width="20%" />
    </a>
 </div>
 
@@ -89,7 +89,7 @@ Link:
    <img src="doc/image/android.png"/>
    </a>
 <a href="https://github.com/WEBSTERMASTER777/telegrambot">
-   <img src="doc/gif/android.gif" width="25%" />
+   <img src="doc/gif/android.gif" width="20%" />
    </a>
 </div>
 <div align="center">
