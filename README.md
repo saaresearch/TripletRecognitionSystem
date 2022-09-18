@@ -3,6 +3,25 @@
 
 ![img_2.png](doc/image/logo.png)
 
+
+
+<br>
+  <div>
+    <br>
+    <a href="https://colab.research.google.com/drive/1YhVJfTeCBbMov1Lo_V6XyzMnXP8rraPJ"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+  </div>
+<br>
+
+## Documentation
+
+See the [Wiki](https://github.com/WEBSTERMASTER777/TripletRecognitionSystem/wiki) for documentation on training, testing and deployment.
+
+
+
+
+<details open>
+<summary>Install</summary>
+
 <details open>
 <summary> 🛠 Install 🛠</summary>
 
