@@ -15,9 +15,6 @@
 
 See the [Wiki](https://github.com/WEBSTERMASTER777/TripletRecognitionSystem/wiki) for documentation on training, testing and deployment.
 
-
-
-
 <details open>
 <summary>Install</summary>
 
@@ -124,6 +121,17 @@ Link:
 ## Custom Dataset and model training
 
 Instruction for dataset loading   and git demo chek in <a href="https://colab.research.google.com/drive/1YhVJfTeCBbMov1Lo_V6XyzMnXP8rraPJ"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+
+## Citation
+
+```
+@article{wang2021you,
+  title={CLASSIFICATION OF FEATURES ON FLOWER SURFACES USING COMPRESSED MACHINE LEARNING MODELS},
+  author={SMETANIN A.A., PERSHUTKIN A.E., DUKHANOV A.V.},
+  journal={Top technologies, № 6 -p. 29-34   },
+  year={2022}
+}
+```
 
 
 
