@@ -1,9 +1,8 @@
 
-#  <p style="text-align: center;">TripletNet recognition system
+# <div align="center">__**TripletNet recognition system**__</div>
 
+[//]: # (#  <p style="text-align: center;">)
 ![img_2.png](doc/image/logo.png)
-
-
 
 <br>
   <div>
