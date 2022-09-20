@@ -125,7 +125,7 @@ Instruction for dataset loading   and git demo chek in <a href="https://colab.re
 ## Citation
 
 ```
-@article{wang2021you,
+@article{
   title={CLASSIFICATION OF FEATURES ON FLOWER SURFACES USING COMPRESSED MACHINE LEARNING MODELS},
   author={SMETANIN A.A., PERSHUTKIN A.E., DUKHANOV A.V.},
   journal={Top technologies, № 6 -p. 29-34   },
