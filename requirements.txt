@@ -2,17 +2,17 @@ cycler==0.10.0
 joblib==0.14.1
 kiwisolver==1.1.0
 matplotlib==3.3.4
-numpy==1.20.1
-Pillow==6.2.2
+numpy==1.21.1
+Pillow==7.1.0
 pyparsing==2.4.6
 python-dateutil==2.8.1
-PyYAML==5.3
-scikit-learn==0.24.1
+PyYAML==5.3.1
+scikit-learn==1.0.0
 scipy==1.6.2
 six==1.15.0
 sklearn==0.0
-torch== 1.11.0+cu113
-torchvision==0.12.0+cu113
+torch== 1.12.1
+torchvision==0.12.0
 tqdm==4.64.0
 torchbearer==0.5.3
 pyTelegramBotAPI==4.3.1
