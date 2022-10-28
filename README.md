@@ -4,6 +4,7 @@
 [//]: # (#  <p style="text-align: center;">)
 ![img_2.png](doc/image/logo.png)
 
+<center><img src="doc/image/itmo_logo.png" width="400"></center>
 <br>
   <div>
     <br>
