@@ -63,9 +63,9 @@ The project contains the following utilities:
   * Dynamic quantization (`dynamic_quantization.py`)
 
 ### Image classification model
-  For training and using the model, all methods of transferring training, Siamese networks with triplet loss, and a metric based on KNN was used to check the quality of training. Each twin of the triplet siamese network is a complete copy of its neighbor, so after the training, we can take any of the twins that will be the feature extractor. Features extracted using the pretrained network are feed to the input of the classifier to get the class prediction at the output. 
-
-
+For training and using the model, all methods of transferring training, Siamese networks with triplet loss, and a metric based on KNN was used to check the quality of training. Each twin of the triplet siamese network is a complete copy of its neighbor, so after the training, we can take any of the twins that will be the feature extractor. Features extracted using the pretrained network are feed to the input of the classifier to get the class prediction at the output. 
+![](doc/image/model_scheme.png)
+Scheme A show Simese network with three twins and the triplet loss function. Scheme B show one of the twins used as a feature extractor followed by a MLP as a Classifier
 ### Usage example
 The resulting model can be used for web and mobile applications:
 #### Telegram bot:
