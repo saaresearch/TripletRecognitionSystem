@@ -26,7 +26,7 @@ See the [Wiki](https://github.com/WEBSTERMASTER777/TripletRecognitionSystem/wiki
 ```console
 git clone 
 ```
-1. Install Python **>=3.6.5 and <3.7**
+1. Install Python **>=3.8.5 and <3.9**
 2. Create virtual environment:
 
 ```console
@@ -61,6 +61,9 @@ The project contains the following utilities:
 * Utils for quantization
   * Static quantization available only for **MobileNetV2** model and training only on CPU (all files with prefix quant)
   * Dynamic quantization (`dynamic_quantization.py`)
+
+### Image classification model
+
 
 ### Usage example
 The resulting model can be used for web and mobile applications:
